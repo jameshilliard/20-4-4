@@ -1,0 +1,105 @@
+diff -Naur glib-2.30.2.ORIG/gio/Makefile.in glib-2.30.2.PATCHED/gio/Makefile.in
+--- glib-2.30.2.ORIG/gio/Makefile.in	2011-11-11 14:11:55.000000000 -0800
++++ glib-2.30.2.PATCHED/gio/Makefile.in	2013-04-25 01:19:05.000000000 -0700
+@@ -435,7 +435,7 @@
+ am__tty_colors = \
+ red=; grn=; lgn=; blu=; std=
+ DIST_SUBDIRS = gdbus-2.0/codegen libasyncns xdgmime inotify fen win32 \
+-	. fam tests
++	. fam
+ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+ am__relativize = \
+   dir0=`pwd`; \
+@@ -710,7 +710,7 @@
+ TEST_PROGS = 
+ NULL = 
+ SUBDIRS = gdbus-2.0/codegen $(am__append_1) $(am__append_3) \
+-	$(am__append_7) $(am__append_10) . $(am__append_13) tests
++	$(am__append_7) $(am__append_10) . $(am__append_13)
+ @MS_LIB_AVAILABLE_TRUE@@OS_WIN32_AND_DLL_COMPILATION_TRUE@noinst_DATA = gio-2.0.lib
+ @MS_LIB_AVAILABLE_TRUE@@OS_WIN32_AND_DLL_COMPILATION_TRUE@install_ms_lib_cmd = $(INSTALL) gio-2.0.lib $(DESTDIR)$(libdir)
+ @MS_LIB_AVAILABLE_TRUE@@OS_WIN32_AND_DLL_COMPILATION_TRUE@uninstall_ms_lib_cmd = -rm $(DESTDIR)$(libdir)/gio-2.0.lib
+diff -Naur glib-2.30.2.ORIG/glib/gthread.h glib-2.30.2.PATCHED/glib/gthread.h
+--- glib-2.30.2.ORIG/glib/gthread.h	2011-11-11 09:56:52.000000000 -0800
++++ glib-2.30.2.PATCHED/glib/gthread.h	2013-04-25 11:17:20.000000000 -0700
+@@ -123,6 +123,7 @@
+  * from another glib-function, e.g. as a callback.
+  */
+ void    g_thread_init   (GThreadFunctions       *vtable);
++void    g_thread_init_ex(GThreadFunctions       *vtable, gboolean copy_non_null);
+ 
+ /* Errorcheck mutexes. If you define G_ERRORCHECK_MUTEXES, then all
+  * mutexes will check for re-locking and re-unlocking */
+diff -Naur glib-2.30.2.ORIG/gthread/gthread-impl.c glib-2.30.2.PATCHED/gthread/gthread-impl.c
+--- glib-2.30.2.ORIG/gthread/gthread-impl.c	2011-11-11 09:56:52.000000000 -0800
++++ glib-2.30.2.PATCHED/gthread/gthread-impl.c	2013-04-25 11:27:49.000000000 -0700
+@@ -291,6 +291,12 @@
+ void
+ g_thread_init (GThreadFunctions* init)
+ {
++  g_thread_init_ex (init, FALSE);
++}
++
++void
++g_thread_init_ex (GThreadFunctions* init, gboolean copy_non_null)
++{
+   gboolean supported;
+ 
+   if (thread_system_already_initialized)
+@@ -303,7 +309,7 @@
+ 
+   thread_system_already_initialized = TRUE;
+ 
+-  if (init == NULL)
++  if (init == NULL || copy_non_null)
+     {
+ #ifdef HAVE_G_THREAD_IMPL_INIT
+       /* now do any initialization stuff required by the
+@@ -311,6 +317,35 @@
+        * course. Otherwise it's up to the user to do so. */
+       g_thread_impl_init();
+ #endif /* HAVE_G_THREAD_IMPL_INIT */
++
++      if (copy_non_null && init != NULL) {
++#define COPY_NON_NULL_VTABLE_FUNCTION( func )                           \
++          if ( init->func != NULL )					\
++              g_thread_functions_for_glib_use_default.func = init->func;
++
++          COPY_NON_NULL_VTABLE_FUNCTION( mutex_new           );
++          COPY_NON_NULL_VTABLE_FUNCTION( mutex_lock          );
++          COPY_NON_NULL_VTABLE_FUNCTION( mutex_trylock       );
++          COPY_NON_NULL_VTABLE_FUNCTION( mutex_unlock        );
++          COPY_NON_NULL_VTABLE_FUNCTION( mutex_free          );
++          COPY_NON_NULL_VTABLE_FUNCTION( cond_new            );
++          COPY_NON_NULL_VTABLE_FUNCTION( cond_signal         );
++          COPY_NON_NULL_VTABLE_FUNCTION( cond_broadcast      );
++          COPY_NON_NULL_VTABLE_FUNCTION( cond_wait           );
++          COPY_NON_NULL_VTABLE_FUNCTION( cond_timed_wait     );
++          COPY_NON_NULL_VTABLE_FUNCTION( cond_free           );
++          COPY_NON_NULL_VTABLE_FUNCTION( private_new         );
++          COPY_NON_NULL_VTABLE_FUNCTION( private_get         );
++          COPY_NON_NULL_VTABLE_FUNCTION( private_set         );
++          COPY_NON_NULL_VTABLE_FUNCTION( thread_create       );
++          COPY_NON_NULL_VTABLE_FUNCTION( thread_yield        );
++          COPY_NON_NULL_VTABLE_FUNCTION( thread_join         );
++          COPY_NON_NULL_VTABLE_FUNCTION( thread_exit         );
++          COPY_NON_NULL_VTABLE_FUNCTION( thread_set_priority );
++          COPY_NON_NULL_VTABLE_FUNCTION( thread_self         );
++          COPY_NON_NULL_VTABLE_FUNCTION( thread_equal        );
++      }
++
+       init = &g_thread_functions_for_glib_use_default;
+     }
+   else
+diff -Naur glib-2.30.2.ORIG/Makefile.in glib-2.30.2.PATCHED/Makefile.in
+--- glib-2.30.2.ORIG/Makefile.in	2011-11-11 14:11:57.000000000 -0800
++++ glib-2.30.2.PATCHED/Makefile.in	2013-04-25 01:19:05.000000000 -0700
+@@ -431,7 +431,7 @@
+ 	gio-2.0-uninstalled.pc.in gio-unix-2.0-uninstalled.pc.in
+ TEST_PROGS = 
+ ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
+-SUBDIRS = . m4macros glib gmodule gthread gobject gio tests po docs
++SUBDIRS = . m4macros glib gmodule gthread gobject gio po docs
+ DIST_SUBDIRS = $(SUBDIRS) build
+ bin_SCRIPTS = glib-gettextize
+ AM_CPPFLAGS = \

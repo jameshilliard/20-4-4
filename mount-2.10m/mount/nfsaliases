@@ -1,0 +1,128 @@
+# Copyright 2013 by TiVo Inc. All Rights Reserved.
+
+# NFS hostname aliases. Tokens MUST end with ':'. If the requested host matches
+# left token, it will be rewritten with right token for purpose of matching NFS
+# pathname aliases below. By convention, %I indicates IP, %H indicates short
+# host, %F indicates FQDN. 
+
+192.168.180.101: %I: # raise
+192.168.180.102: %I: # fold 
+192.168.180.121: %I: # allin
+192.168.181.250: %I: # river -> fold
+192.168.181.252: %I: # flop -> raise
+bitstream-server: %H: # raise
+bitstream-server.tivo.com: %F:
+bitstream-server.engr.tivo.com: %F:
+corpfs01: %H: # flop
+corpfs01.tivo.com: %F:
+corpfs01.engr.tivo.com: %F:
+flop: %H:
+flop.tivo.com: %F:
+flop.engr.tivo.com: %F:
+fold: %H:
+fold.tivo.com: %F:
+fold.engr.tivo.com: %F:
+fsvr-perm: %H: # flop
+fsvr-perm.tivo.com: %F:
+fsvr-perm.engr.tivo.com: %F:
+gpl-archive: %H: # fold
+gpl-archive.tivo.com: %F:
+gpl-archive.engr.tivo.com: %F:
+kitsrv: %H: # raise
+kitsrv.tivo.com: %F:
+kitsrv.engr.tivo.com: %F:
+log-archive: %H: # fold
+log-archive.tivo.com: %F:
+log-archive.engr.tivo.com: %F:
+packsrv: %H: # fold
+packsrv.tivo.com: %F:
+packsrv.engr.tivo.com: %F:
+projectfile: %H: # flop
+projectfile.tivo.com: %F:
+projectfile.engr.tivo.com: %F:
+raise: %H: # raise
+raise.tivo.com: %F:
+raise.engr.tivo.com: %F:
+river: %H:
+river.tivo.com: %F:
+river.engr.tivo.com: %F:
+rpm-archive: %H: # raise
+rpm-archive.tivo.com: %F:
+rpm-archive.engr.tivo.com: %F:
+rpmsrv: %H: # river
+rpmsrv.tivo.com: %F:
+rpmsrv.engr.tivo.com: %F:
+testroots: %H: # fold
+testroots.tivo.com: %F:
+testroots.engr.tivo.com: %F:
+tivotrkadm: %H: # flop
+tivotrkadm.tivo.com: %F:
+tivotrkadm.engr.tivo.com: %F:
+
+# NFS pathname aliases. Tokens must NOT end with ':'. If the requested
+# host:/path starts with left token, replace it with the right token and try to
+# mount it. %I aliases to 10.100.116.17, %H aliases to nafs01, %F aliases to
+# nasfs01.tivo.com. 
+
+%I:/BuildshareRoot      10.100.116.17:/ifs/unixroot/engineering/buildshare 
+%H:/BuildshareRoot      nasfs01:/ifs/unixroot/engineering/buildshare
+%F:/BuildshareRoot      nasfs01.tivo.com:/ifs/unixroot/engineering/buildshare
+
+%I:/vol/splinter        10.100.116.17:/ifs/unixroot/engineering/splinter
+%H:/vol/splinter        nasfs01:/ifs/unixroot/engineering/splinter
+%F:/vol/splinter        nasfs01.tivo.com:/ifs/unixroot/engineering/splinter
+
+%I:/spdbuildroot        10.100.116.17:/ifs/unixroot/engineering/SPD_Build 
+%H:/spdbuildroot        nasfs01:/ifs/unixroot/engineering/SPD_Build 
+%F:/spdbuildroot        nasfs01.tivo.com:/ifs/unixroot/engineering/SPD_Build 
+
+%I:/swparchive          10.100.116.17:/ifs/unixroot/engineering/SWP_archive/swp_archive_qt 
+%H:/swparchive          nasfs01:/ifs/unixroot/engineering/SWP_archive/swp_archive_qt 
+%F:/swparchive          nasfs01.tivo.com:/ifs/unixroot/engineering/SWP_archive/swp_archive_qt 
+
+%I:/buildshare          10.100.116.17:/ifs/unixroot/engineering/buildshare/buildqt
+%H:/buildshare          nasfs01:/ifs/unixroot/engineering/buildshare/buildqt
+%F:/buildshare          nasfs01.tivo.com:/ifs/unixroot/engineering/buildshare/buildqt
+
+%I:/spdbuild            10.100.116.17:/ifs/unixroot/engineering/SPD_Build/spdbuildqt 
+%H:/spdbuild            nasfs01:/ifs/unixroot/engineering/SPD_Build/spdbuildqt 
+%F:/spdbuild            nasfs01.tivo.com:/ifs/unixroot/engineering/SPD_Build/spdbuildqt 
+
+%I:/PerfBack            10.100.116.17:/ifs/unixroot/engineering/Perforce_backup
+%H:/PerfBack            nasfs01:/ifs/unixroot/engineering/Perforce_backup
+%F:/PerfBack            nasfs01.tivo.com:/ifs/unixroot/engineering/Perforce_backup
+
+%I:/neoshare            10.100.116.17:/ifs/unixroot/engineering/NeoShare/neo_qt
+%H:/neoshare            nasfs01:/ifs/unixroot/engineering/NeoShare/neo_qt
+%F:/neoshare            nasfs01.tivo.com:/ifs/unixroot/engineering/NeoShare/neo_qt
+
+%I:/neoroot             10.100.116.17:/ifs/unixroot/engineering/NeoShare
+%H:/neoroot             nasfs01:/ifs/unixroot/engineering/NeoShare
+%F:/neoroot             nasfs01.tivo.com:/ifs/unixroot/engineering/NeoShare
+
+%I:/swproot             10.100.116.17:/ifs/unixroot/engineering/SWP_archive 
+%H:/swproot             nasfs01:/ifs/unixroot/engineering/SWP_archive 
+%F:/swproot             nasfs01.tivo.com:/ifs/unixroot/engineering/SWP_archive 
+
+%I:/packs               10.100.116.17:/ifs/unixroot/engineering/packs/packs_qt/packs 
+%H:/packs               nasfs01:/ifs/unixroot/engineering/packs/packs_qt/packs 
+%F:/packs               nasfs01.tivo.com:/ifs/unixroot/engineering/packs/packs_qt/packs 
+
+%I:/dist                10.100.116.17:/ifs/unixroot/engineering/dist_nfs/dist_nfs_qt/dist
+%H:/dist                nasfs01:/ifs/unixroot/engineering/dist_nfs/dist_nfs_qt/dist
+%F:/dist                nasfs01.tivo.com:/ifs/unixroot/engineering/dist_nfs/dist_nfs_qt/dist
+
+%I:/spd                 10.100.116.17:/ifs/unixroot/engineering/spd/spdqt
+%H:/spd                 nasfs01:/ifs/unixroot/engineering/spd/spdqt
+%F:/spd                 nasfs01.tivo.com:/ifs/unixroot/engineering/spd/spdqt
+
+# Directly map everything else, but note trailing slashes
+%I:/                    10.100.116.17:/ifs/unixroot/engineering/ 
+%H:/                    nasfs01:/ifs/unixroot/engineering/ 
+%F:/                    nasfs01.tivo.com:/ifs/unixroot/engineering/ 
+
+# Psuedo-hosts that resolve to interesting directories, note trailing slashes
+packs:/                 10.100.116.17:/ifs/unixroot/engineering/packs/packs_qt/packs/
+kits:/                  10.100.116.17:/ifs/unixroot/engineering/kits/kits/
+
+

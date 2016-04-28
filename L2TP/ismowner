@@ -1,0 +1,30 @@
+<!--
+-
+-  File: ismowner
+-
+-  Description:
+-
+-    States owners/subowners for this area of the code - for more details, look
+-    up ISM Ownership in the Big Book of TiVo
+-
+-    NOTE: this file should not be exported to 3rd parties
+- 
+-   Copyright (c) 2009 TiVo Inc. All rights reserved.
+-
+-->
+
+<isminfo>
+  <ismowner>jconley</ismowner>
+
+<!--
+-  Ism Areas can be optionally added w/ the statement below for
+-  finer grained ownership rules
+-
+-  <ismarea>
+-    <name>XXX</name>
+-    <description>XXX</description>
+-    <owner>XXX</owner>
+-  </ismarea>
+-->
+
+</isminfo>

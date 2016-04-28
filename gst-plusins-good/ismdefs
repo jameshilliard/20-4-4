@@ -1,0 +1,37 @@
+###############################################################################
+#
+# File:	ismdefs
+# Description:
+#	Common definitions for building each ISM.
+#	This file is normally accessed as $(ISM_DEPTH)/ismdefs by each
+#	Makefile in the ISM
+#
+# Copyright 2013 TiVo Inc. All Rights Reserved.
+#
+###############################################################################
+
+include $(ROOT)/include/make/commondefs
+include $(OPENSOURCEDEFS)
+
+###############################################################################
+
+ISM_DESCRIPTION = gst-plugins-good
+
+ISM_VERSION	= 1.0
+ISM_RELEASE	= 1
+
+ICOPTS		=
+ICXXOPTS	=
+ILDOPTS		=
+
+ICDEFS		=
+ICXXDEFS	=
+ILDLIBS		=
+
+ICINCS		=
+ICXXINCS	=
+ILDINCS		= 
+IDIRT		=
+ITDIRT		=
+
+ISMRULES	= $(ISM_DEPTH)/ismrules

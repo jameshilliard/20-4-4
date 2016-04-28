@@ -1,0 +1,23 @@
+# Uncomment one of these to get extra debugging on the entire tivo system or
+# just the surface related parts (for example).
+#debug=tivogfx
+#debug=tivogfx/surface
+
+# Uncomment this to have screenshots go to /tmp/ (or replace w/ dir of choice)
+#screenshot-dir=/tmp/
+
+# Needed to properly clear the screen to a transparent color
+bg-color=0
+
+# Reduces our graphics memory usage by ~3.5 MiB by removing an unnecessary buffer
+layer-buffer-mode=frontonly
+
+# Needed so we can catch the signal for proper shutdown handling
+no-sighandler
+
+# Disable warnings (it reduces logging in a case of surface allocation failure)
+quiet=warning
+
+# We don't use the cursor, but if we don't turn it off, DFB still does extra
+# blits to draw an invisible cursor. So, turn it off!
+no-cursor

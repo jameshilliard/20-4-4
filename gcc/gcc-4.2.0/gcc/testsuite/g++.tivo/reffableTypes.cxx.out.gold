@@ -1,0 +1,6 @@
+reffableTypes.cxx: In function 'void Bad()':
+reffableTypes.cxx:27: warning: TiVo-Ref: reference counting template class parameter 'Bar' must be a subtype of TmkCore!
+reffableTypes.cxx:28: warning: TiVo-Ref: reference counting template class parameter 'TmkMempool' must be a subtype of TmkCore!
+reffableTypes.cxx: At global scope:
+reffableTypes.cxx:36: warning: TiVo-Ref: reference counting template class parameter 'Bar' must be a subtype of TmkCore!
+reffableTypes.cxx:37: warning: TiVo-Ref: reference counting template class parameter 'TmkMempool' must be a subtype of TmkCore!

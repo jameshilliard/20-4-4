@@ -1,0 +1,561 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:695: checking host system type
+configure:1124: checking for gcc
+configure:1201: checking whether the C compiler (gcc  ) works
+configure:1215: gcc -o conftest    conftest.c  1>&5
+configure:1235: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:1240: checking whether we are using GNU C
+configure:1249: gcc -E conftest.c
+configure:1264: checking whether gcc accepts -g
+configure:1292: checking whether large file support needs explicit enabling
+configure:1324: checking for POSIXized ISC
+configure:1345: checking how to run the C preprocessor
+configure:1366: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1407: checking for minix/config.h
+configure:1417: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1413: minix/config.h: No such file or directory
+configure: failed program was:
+#line 1412 "configure"
+#include "confdefs.h"
+#include <minix/config.h>
+configure:1510: checking whether gcc needs -traditional
+configure:1567: checking for a BSD compatible install
+configure:1619: checking for ar
+configure:1647: checking for ranlib
+configure:1678: checking for bison
+configure:1708: checking whether make sets ${MAKE}
+configure:1738: checking for working alloca.h
+configure:1750: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1771: checking for alloca
+configure:1799: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1965: checking whether getpgrp takes no argument
+configure:2028: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2052: checking whether setvbuf arguments are reversed
+configure:2074: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function `main':
+configure:2067: warning: passing arg 2 of `setvbuf' makes pointer from integer without a cast
+configure:2067: warning: passing arg 3 of `setvbuf' makes integer from pointer without a cast
+configure: failed program was:
+#line 2060 "configure"
+#include "confdefs.h"
+#include <stdio.h>
+/* If setvbuf has the reversed format, exit 0. */
+main () {
+  /* This call has the arguments reversed.
+     A reversed system may check and see that the address of main
+     is not _IOLBF, _IONBF, or _IOFBF, and return nonzero.  */
+  if (setvbuf(stdout, _IOLBF, (char *) main, BUFSIZ) != 0)
+    exit(1);
+  putc('\r', stdout);
+  exit(0);			/* Non-reversed systems segv here.  */
+}
+configure:2098: checking for vprintf
+configure:2126: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2203: checking for wait3 that fills in rusage
+configure:2242: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2265: checking for working strcoll
+configure:2283: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2331: checking return type of signal handlers
+configure:2353: gcc -c -g -O2  conftest.c 1>&5
+configure:2373: checking for __setostype
+configure:2401: gcc -o conftest -g -O2   conftest.c  1>&5
+/tmp/cca296141.o: In function `main':
+/home/sstone/sandbox/devtools/bash-2.02/configure:2395: undefined reference to `__setostype'
+configure: failed program was:
+#line 2378 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char __setostype(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char __setostype();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub___setostype) || defined (__stub_____setostype)
+choke me
+#else
+__setostype();
+#endif
+
+; return 0; }
+configure:2424: checking for wait3
+configure:2452: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2476: checking for mkfifo
+configure:2504: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for dup2
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for select
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for getdtablesize
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for getgroups
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for gethostname
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for setdtablesize
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+/tmp/cca297331.o: In function `main':
+/home/sstone/sandbox/devtools/bash-2.02/configure:2558: undefined reference to `setdtablesize'
+configure: failed program was:
+#line 2541 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char setdtablesize(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char setdtablesize();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_setdtablesize) || defined (__stub___setdtablesize)
+choke me
+#else
+setdtablesize();
+#endif
+
+; return 0; }
+configure:2536: checking for getpagesize
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for killpg
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for lstat
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for getpeername
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for getrlimit
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for getrusage
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for gettimeofday
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for waitpid
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2536: checking for tcgetpgrp
+configure:2564: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for bcopy
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for bzero
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for confstr
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for getcwd
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for strcasecmp
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for setenv
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for putenv
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for setlinebuf
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for setlocale
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for strchr
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for strerror
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for strtod
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for strtol
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for strtoul
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for tcgetattr
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for uname
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for sysconf
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for ulimit
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for times
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for tzset
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for siginterrupt
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2595: checking for memmove
+configure:2623: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2652: checking for libintl.h
+configure:2662: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2691: checking for gettext
+configure:2719: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2691: checking for textdomain
+configure:2719: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2691: checking for bindtextdomain
+configure:2719: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2853: checking for dlopen in -ldl
+configure:2872: gcc -o conftest -g -O2   conftest.c -ldl   1>&5
+configure:2902: checking for dlopen
+configure:2930: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:2902: checking for dlclose
+configure:2930: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:2902: checking for dlsym
+configure:2930: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:2957: checking for sys_siglist declaration in signal.h or unistd.h
+configure:2974: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:2970: warning: initialization discards `const' from pointer target type
+configure:3000: checking for dirent.h that defines DIR
+configure:3013: gcc -c -g -O2  conftest.c 1>&5
+configure:3038: checking for opendir in -ldir
+configure:3057: gcc -o conftest -g -O2   conftest.c -ldir  -ldl  1>&5
+ld: cannot open -ldir: No such file or directory
+configure: failed program was:
+#line 3046 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char opendir();
+
+int main() {
+opendir()
+; return 0; }
+configure:3121: checking whether time.h and sys/time.h may both be included
+configure:3135: gcc -c -g -O2  conftest.c 1>&5
+configure:3162: checking for unistd.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for stdlib.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for stdarg.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for varargs.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for limits.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for string.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for memory.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for locale.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for termcap.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for termio.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for termios.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for dlfcn.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3162: checking for stddef.h
+configure:3172: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3204: checking for sys/ptem.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3210: sys/ptem.h: No such file or directory
+configure: failed program was:
+#line 3209 "configure"
+#include "confdefs.h"
+#include <sys/ptem.h>
+configure:3204: checking for sys/pte.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3210: sys/pte.h: No such file or directory
+configure: failed program was:
+#line 3209 "configure"
+#include "confdefs.h"
+#include <sys/pte.h>
+configure:3204: checking for sys/stream.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3210: sys/stream.h: No such file or directory
+configure: failed program was:
+#line 3209 "configure"
+#include "confdefs.h"
+#include <sys/stream.h>
+configure:3204: checking for sys/select.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3204: checking for sys/file.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3204: checking for sys/resource.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3204: checking for sys/param.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3204: checking for sys/socket.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3204: checking for sys/time.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3204: checking for sys/times.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3204: checking for sys/wait.h
+configure:3214: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3377: checking for uid_t in sys/types.h
+configure:3411: checking type of array argument to getgroups
+configure:3444: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:3482: checking for ANSI C header files
+configure:3495: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3562: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:3586: checking for off_t
+configure:3619: checking for mode_t
+configure:3652: checking for uid_t in sys/types.h
+configure:3686: checking for pid_t
+configure:3719: checking for size_t
+configure:3752: checking for time_t
+configure:3786: checking return type of signal handlers
+configure:3828: checking size of int
+configure:3847: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:3867: checking size of long
+configure:3886: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:3906: checking size of char *
+configure:3925: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:3946: checking for int32_t
+configure:4045: checking for u_int32_t
+configure:4145: checking for ptrdiff_t
+configure:4245: checking whether stat file-mode macros are broken
+configure:4337: checking whether byte ordering is bigendian
+configure:4355: gcc -c -g -O2  conftest.c 1>&5
+configure:4370: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:4365: `not' undeclared (first use this function)
+configure:4365: (Each undeclared identifier is reported only once
+configure:4365: for each function it appears in.)
+configure:4365: parse error before `big'
+configure: failed program was:
+#line 4359 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/param.h>
+int main() {
+
+#if BYTE_ORDER != BIG_ENDIAN
+ not big endian
+#endif
+; return 0; }
+configure:4430: checking whether #! works in shell scripts
+configure:4456: checking for restartable system calls
+configure:4482: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure: In function `main':
+configure:4474: warning: passing arg 2 of `signal' from incompatible pointer type
+configure:4545: checking if dup2 fails to clear the close-on-exec flag
+configure:4574: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure: failed program was:
+#line 4554 "configure"
+#include "confdefs.h"
+
+#include <sys/types.h>
+#include <fcntl.h>
+main()
+{
+  int fd1, fd2, fl;
+  fd1 = open("/dev/null", 2);
+  if (fcntl(fd1, 2, 1) < 0)
+    exit(1);
+  fd2 = dup2(fd1, 1);
+  if (fd2 < 0)
+    exit(2);
+  fl = fcntl(fd2, 1, 0);
+  /* fl will be 1 if dup2 did not reset the close-on-exec flag. */
+  exit(fl != 1);
+}
+
+configure:4599: checking whether pgrps need synchronization
+configure:4660: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:4685: checking for type of signal functions
+configure:4704: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:4855: checking for sys_errlist and sys_nerr
+configure:4869: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:4890: checking for sys_siglist in system C library
+configure:4916: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure: In function `main':
+configure:4911: warning: initialization discards `const' from pointer target type
+configure:4939: checking for _sys_siglist in signal.h or unistd.h
+configure:4956: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:4952: warning: initialization discards `const' from pointer target type
+configure:4977: checking for _sys_siglist in system C library
+configure:5003: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:5027: checking whether signal handlers are of type void
+configure:5047: gcc -c -g -O2  conftest.c 1>&5
+configure:5067: checking for clock_t
+configure:5103: checking for sigset_t
+configure:5139: checking for quad_t
+configure:5180: checking for size and type of struct rlimit fields
+configure:5193: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:5189: `rlim_t' undeclared (first use this function)
+configure:5189: (Each undeclared identifier is reported only once
+configure:5189: for each function it appears in.)
+configure:5189: parse error before `xxx'
+configure: failed program was:
+#line 5185 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/resource.h>
+int main() {
+rlim_t xxx;
+; return 0; }
+configure:5222: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure: failed program was:
+#line 5206 "configure"
+#include "confdefs.h"
+
+#include <sys/types.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+main()
+{
+#ifdef HAVE_QUAD_T
+  struct rlimit rl;
+  if (sizeof(rl.rlim_cur) == sizeof(quad_t))
+    exit(0);
+#endif
+  exit(1);
+}
+configure:5254: checking for a c_line member of struct termios
+configure:5267: gcc -c -g -O2  conftest.c 1>&5
+configure:5287: checking for a c_line member of struct termio
+configure:5300: gcc -c -g -O2  conftest.c 1>&5
+configure:5321: checking if struct dirent has a d_ino member
+configure:5355: gcc -c -g -O2  conftest.c 1>&5
+configure:5377: checking if struct dirent has a d_fileno member
+configure:5411: gcc -c -g -O2  conftest.c 1>&5
+configure:5432: checking for struct winsize in sys/ioctl.h and termios.h
+configure:5445: gcc -c -g -O2  conftest.c 1>&5
+configure:5494: checking for the existence of strsignal
+configure:5507: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:5528: checking if opendir() opens non-directories
+configure:5574: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure: failed program was:
+#line 5538 "configure"
+#include "confdefs.h"
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif /* HAVE_UNISTD_H */
+#if defined(HAVE_DIRENT_H)
+# include <dirent.h>
+#else
+# define dirent direct
+# ifdef HAVE_SYS_NDIR_H
+#  include <sys/ndir.h>
+# endif /* SYSNDIR */
+# ifdef HAVE_SYS_DIR_H
+#  include <sys/dir.h>
+# endif /* SYSDIR */
+# ifdef HAVE_NDIR_H
+#  include <ndir.h>
+# endif
+#endif /* HAVE_DIRENT_H */
+main()
+{
+DIR *dir;
+int fd;
+unlink("/tmp/not_a_directory");
+fd = open("/tmp/not_a_directory", O_WRONLY|O_CREAT, 0666);
+write(fd, "\n", 1);
+close(fd);
+dir = opendir("/tmp/not_a_directory");
+unlink("/tmp/not_a_directory");
+exit (dir == 0);
+}
+configure:5597: checking for declaration of printf in <stdio.h>
+configure:5624: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:5647: checking whether ulimit can substitute for getdtablesize
+configure:5667: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:5690: checking to see if getenv can be redefined
+configure:5735: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:5758: checking if getcwd() calls popen()
+configure:5823: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:5846: checking for declaration of sbrk in <unistd.h>
+configure:5877: checking for presence of POSIX-style sigsetjmp/siglongjmp
+configure:5928: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:5952: checking whether or not strcoll and strcmp differ
+configure:6001: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure: failed program was:
+#line 5962 "configure"
+#include "confdefs.h"
+
+#include <stdio.h>
+#if defined (HAVE_LOCALE_H)
+#include <locale.h>
+#endif
+
+main(c, v)
+int     c;
+char    *v[];
+{
+        int     r1, r2;
+        char    *deflocale, *defcoll;
+
+#ifdef HAVE_SETLOCALE
+        deflocale = setlocale(LC_ALL, "");
+	defcoll = setlocale(LC_COLLATE, "");
+#endif
+
+#ifdef HAVE_STRCOLL
+	/* These two values are taken from tests/glob-test. */
+        r1 = strcoll("abd", "aXd");
+#else
+	r1 = 0;
+#endif
+        r2 = strcmp("abd", "aXd");
+
+	/* These two should both be greater than 0.  It is permissible for
+	   a system to return different values, as long as the sign is the
+	   same. */
+
+        /* Exit with 1 (failure) if these two values are both > 0, since
+	   this tests whether strcoll(3) is broken with respect to strcmp(3)
+	   in the default locale. */
+	exit (r1 > 0 && r2 > 0);
+}
+
+configure:6027: checking if signal handlers must be reinstalled when invoked
+configure:6084: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:6108: checking for presence of necessary job control definitions
+configure:6165: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:6188: checking for presence of named pipes
+configure:6232: gcc -o conftest -g -O2   conftest.c -ldl  1>&5
+configure:6256: checking for TIOCGWINSZ in sys/ioctl.h
+configure:6269: gcc -c -g -O2  conftest.c 1>&5
+configure:6290: checking for TIOCSTAT in sys/ioctl.h
+configure:6303: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:6299: `TIOCSTAT' undeclared (first use this function)
+configure:6299: (Each undeclared identifier is reported only once
+configure:6299: for each function it appears in.)
+configure: failed program was:
+#line 6295 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/ioctl.h>
+int main() {
+int x = TIOCSTAT;
+; return 0; }
+configure:6324: checking for FIONREAD in sys/ioctl.h
+configure:6337: gcc -c -g -O2  conftest.c 1>&5
+configure:6359: checking for speed_t in sys/types.h
+configure:6371: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:6367: `speed_t' undeclared (first use this function)
+configure:6367: (Each undeclared identifier is reported only once
+configure:6367: for each function it appears in.)
+configure:6367: parse error before `x'
+configure: failed program was:
+#line 6364 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+int main() {
+speed_t x;
+; return 0; }
+configure:6392: checking whether programs are able to redeclare getpw functions
+configure:6408: gcc -c -g -O2  conftest.c 1>&5
+configure:6513: checking for tgetent in -ltermcap
+configure:6532: gcc -o conftest -g -O2   conftest.c -ltermcap  -ldl  1>&5
+configure:6637: checking which library has the termcap functions
+configure:6660: checking whether /dev/fd is available
+configure:6696: checking for default mail directory

@@ -1,0 +1,10 @@
+pointerarg.cxx: In function 'Foo* Fcn1()':
+pointerarg.cxx:9: warning: TiVo-Ref: the return type 'Foo' of function 'Fcn1' should be assigned to a reference counting template class!
+pointerarg.cxx: In function 'void Test()':
+pointerarg.cxx:20: warning: TiVo-Ref: passing function return value that is a pointer to reference counted type 'Foo*' as an argument!
+pointerarg.cxx: At global scope:
+pointerarg.cxx:26: warning: TiVo-Ref: the return type 'Foo' of function 'Meth1' should be assigned to a reference counting template class!
+pointerarg.cxx:29: warning: TiVo-Ref: field 'pBad' is of type 'Foo' and should be reference counted!
+pointerarg.cxx: In member function 'void Class::Test()':
+pointerarg.cxx:34: warning: TiVo-Ref: passing function return value that is a pointer to reference counted type 'Foo*' as an argument!
+pointerarg.cxx:35: warning: TiVo-Ref: passing function return value that is a pointer to reference counted type 'TmkCore*' as an argument!

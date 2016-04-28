@@ -1,0 +1,12 @@
+if $tracelevel then {
+    strace $tracelevel
+}
+
+if ![info exists TIVO_COMPILER] {
+    fail "TIVO_COMPILER is not set"
+    return
+}
+
+# This is a hack until I rewrite the testing in tcl for dejagnu.
+puts [exec $srcdir/g++.tivo/tivo.sh \
+      $target_triplet $TIVO_COMPILER $srcdir/g++.tivo]

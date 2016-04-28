@@ -1,0 +1,74 @@
+In file included from scheduler.cxx:1:
+scheduler.h:32: warning: TiVo-Ref: the return type 'Abstract' of function 'getFavoriteAbstract' should be assigned to a reference counting template class!
+scheduler.h:36: warning: TiVo-Ref: the return type 'Recording' of function 'getFavoriteRecording' should be assigned to a reference counting template class!
+scheduler.h:44: warning: TiVo-Ref: the return type 'Abstract' of function 'getClassFavoriteAbstract' should be assigned to a reference counting template class!
+scheduler.h:48: warning: TiVo-Ref: the return type 'Recording' of function 'getClassFavoriteRecording' should be assigned to a reference counting template class!
+scheduler.h:56: warning: TiVo-Ref: field 'abstractM' is of type 'Abstract' and should be reference counted!
+scheduler.h:57: warning: TiVo-Ref: field 'recordingM' is of type 'Recording' and should be reference counted!
+scheduler.h:65: warning: TiVo-Ref: variable 'abstractS' is of type 'Abstract' and should be reference counted!
+scheduler.h:66: warning: TiVo-Ref: variable 'recordingS' is of type 'Recording' and should be reference counted!
+In file included from scheduler.cxx:2:
+unrelated.h:33: warning: TiVo-Ref: the return type 'Abstract' of function 'getAbstract' should be assigned to a reference counting template class!
+unrelated.h:38: warning: TiVo-Ref: the return type 'Recording' of function 'getRecording' should be assigned to a reference counting template class!
+unrelated.h:44: warning: TiVo-Ref: field 'nestedsAbstractM' is of type 'Abstract' and should be reference counted!
+scheduler.cxx: In function 'Recording* getSomeRecording()':
+scheduler.cxx:10: warning: TiVo-Ref: the return type 'Recording' of function 'getSomeRecording' should be assigned to a reference counting template class!
+scheduler.cxx: At global scope:
+scheduler.cxx:15: warning: TiVo-Ref: variable 'abstractG' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:16: warning: TiVo-Ref: variable 'recordingG' is of type 'Recording' and should be reference counted!
+scheduler.cxx:25: warning: TiVo-Ref: variable 'abstractStatic' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:26: warning: TiVo-Ref: variable 'recordingStatic' is of type 'Recording' and should be reference counted!
+scheduler.cxx:28: warning: TiVo-Ref: variable 'arrayOfAbstracts' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:31: warning: TiVo-Ref: variable 'arrayOfRecordings' is of type 'Recording' and should be reference counted!
+abstract.h: In instantiation of 'AbstractHolder<Abstract>':
+scheduler.cxx:35:   instantiated from here
+abstract.h:27: warning: TiVo-Ref: field 'holdingM' is of type 'Abstract' and should be reference counted!
+abstract.h: In instantiation of 'AbstractHolder<Recording>':
+scheduler.cxx:36:   instantiated from here
+abstract.h:27: warning: TiVo-Ref: field 'holdingM' is of type 'Recording' and should be reference counted!
+scheduler.cxx:37: warning: TiVo-Ref: field 'holdingM' is of type 'Recording' and should be reference counted!
+scheduler.cxx: In function 'Recording* getRandomRecording()':
+scheduler.cxx:48: warning: TiVo-Ref: the return type 'Recording' of function 'getRandomRecording' should be assigned to a reference counting template class!
+scheduler.cxx: In constructor 'Foo::Foo()':
+scheduler.cxx:66: warning: TiVo-Ref: variable 'pInlined' is of type 'Recording' and should be reference counted!
+scheduler.cxx:66: warning: unused variable 'pInlined'
+scheduler.cxx: In function 'void shouldNoticeThatLocalsAreRawPointers()':
+scheduler.cxx:97: warning: TiVo-Ref: field 'abstractM' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:97: warning: TiVo-Ref: field 'recordingM' is of type 'Recording' and should be reference counted!
+scheduler.cxx:97: warning: TiVo-Ref: variable 'abstractS' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:97: warning: TiVo-Ref: variable 'recordingS' is of type 'Recording' and should be reference counted!
+scheduler.cxx:98: warning: TiVo-Ref: variable 'pAbstract' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:99: warning: TiVo-Ref: variable 'pFavorite' is of type 'Recording' and should be reference counted!
+scheduler.cxx:102: warning: TiVo-Ref: variable 'pScopedAbstract' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:102: warning: unused variable 'pScopedAbstract'
+scheduler.cxx:105: warning: TiVo-Ref: variable 'pScopedAbstractElse' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:105: warning: unused variable 'pScopedAbstractElse'
+scheduler.cxx:98: warning: unused variable 'pAbstract'
+scheduler.cxx:99: warning: unused variable 'pFavorite'
+scheduler.cxx: In function 'void shouldBeOk()':
+scheduler.cxx:111: warning: TiVo-Ref: field 'abstractM' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:111: warning: TiVo-Ref: field 'recordingM' is of type 'Recording' and should be reference counted!
+scheduler.cxx:111: warning: TiVo-Ref: variable 'abstractS' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:111: warning: TiVo-Ref: variable 'recordingS' is of type 'Recording' and should be reference counted!
+scheduler.cxx: In function 'void static_shouldNoticeThatLocalsAreRawPointers()':
+scheduler.cxx:118: warning: TiVo-Ref: variable 'pAbstract' is of type 'Abstract' and should be reference counted!
+scheduler.cxx:119: warning: TiVo-Ref: variable 'pFavorite' is of type 'Recording' and should be reference counted!
+scheduler.cxx:118: warning: unused variable 'pAbstract'
+scheduler.cxx:119: warning: unused variable 'pFavorite'
+abstract.h: In member function 'void AbstractHolder<T>::testThatLocalsInTemplatedInlinesAreChecked(T*) [with T = Unrelated]':
+scheduler.cxx:44:   instantiated from here
+abstract.h:24: warning: unused variable 'pArgAbs'
+abstract.h: In member function 'void AbstractHolder<T>::testThatLocalsInTemplatedInlinesAreChecked(T*) [with T = Recording]':
+scheduler.cxx:45:   instantiated from here
+abstract.h:24: warning: TiVo-Ref: variable 'pArgAbs' is of type 'Recording' and should be reference counted!
+abstract.h:24: warning: unused variable 'pArgAbs'
+scheduler.cxx: At global scope:
+scheduler.cxx:25: warning: 'abstractStatic' defined but not used
+scheduler.cxx:26: warning: 'recordingStatic' defined but not used
+scheduler.cxx:42: warning: 'void forceInstantiationOfAbstractHolderMethods()' defined but not used
+scheduler.cxx:48: warning: 'Recording* getRandomRecording()' defined but not used
+scheduler.cxx:56: warning: 'void testInliningAndThis(Recording*)' defined but not used
+scheduler.cxx:75: warning: 'void testInliningAndMemberVarInits()' defined but not used
+scheduler.cxx:109: warning: 'void shouldBeOk()' defined but not used
+scheduler.cxx:116: warning: 'void static_shouldNoticeThatLocalsAreRawPointers()' defined but not used
+scheduler.cxx:122: warning: 'void static_shouldBeOk()' defined but not used

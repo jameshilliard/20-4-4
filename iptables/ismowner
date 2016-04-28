@@ -1,0 +1,18 @@
+<!--
+-
+-  File: ismowner
+-
+-  Description:
+-
+-    States owners/subowners for this area of the code - for more details, look
+-    up ISM Ownership in the Big Book of TiVo
+-
+-    NOTE: this file should not be exported to 3rd parties
+- 
+-   Copyright (c) 2004, 2005 TiVo Inc. All rights reserved.
+-
+-->
+
+<isminfo>
+  <ismowner>dplatt</ismowner>
+</isminfo>

@@ -1,0 +1,18 @@
+--- gst-plugins-good-0.10.31/gst/wavparse/gstwavparse.c	2011-12-30 05:59:12.000000000 -0800
++++ gst-plugins-good-0.10.31.PATCHED/gst/wavparse/gstwavparse.c	2014-01-07 18:17:19.572808561 -0800
+@@ -1772,6 +1772,7 @@
+ 
+   GST_DEBUG_OBJECT (wav, "adding src pad");
+ 
++#if 0
+   if (wav->caps) {
+     s = gst_caps_get_structure (wav->caps, 0);
+     if (s && gst_structure_has_name (s, "audio/x-raw-int") && buf != NULL) {
+@@ -1796,6 +1797,7 @@
+       }
+     }
+   }
++#endif
+ 
+   gst_wavparse_create_sourcepad (wav);
+   gst_pad_set_active (wav->srcpad, TRUE);

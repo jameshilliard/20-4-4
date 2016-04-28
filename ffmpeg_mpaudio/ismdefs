@@ -1,0 +1,26 @@
+#
+# File:	ismdefs
+# Description:
+#	Common definitions for building each ISM.
+#	This file is normally accessed as $(ISM_DEPTH)/ismdefs by each
+#	Makefile in the ISM
+#
+# Copyright (c) 1998-2003 TiVo Inc.
+#
+###############################################################################
+
+include $(ROOT)/include/make/commondefs
+
+###############################################################################
+
+ISM_DESCRIPTION = \
+	ffmpeg_mpaudio - MPEG1 audio layer 1, 2, 3 decoding 
+
+ISM_VERSION	= 0.5
+ISM_RELEASE	= 1
+
+
+FFMPEG_RELEASE = ffmpeg-0.5
+
+
+ISM_ENABLED=1

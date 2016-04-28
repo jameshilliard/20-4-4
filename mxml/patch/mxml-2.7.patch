@@ -1,0 +1,71 @@
+diff -Naur mxml-2.7.ORIG/Makefile.in mxml-2.7.PATCHED/Makefile.in
+--- mxml-2.7.ORIG/Makefile.in	2011-04-13 08:43:32.000000000 -0700
++++ mxml-2.7.PATCHED/Makefile.in	2013-12-09 23:42:06.000000000 -0800
+@@ -50,6 +50,7 @@
+ libdir		=	@libdir@
+ mandir		=	@mandir@
+ docdir		=	@docdir@
++srcdir		=	@srcdir@
+ BUILDROOT	=	$(DSTROOT)
+ 
+ 
+@@ -70,8 +71,7 @@
+ #
+ 
+ .SILENT:
+-.SUFFIXES:	.c .man .o
+-.c.o:
++%.o: $(srcdir)/%.c
+ 	echo Compiling $<
+ 	$(CC) $(CFLAGS) -c -o $@ $<
+ 
+@@ -88,7 +88,7 @@
+ 			mxml-index.o mxml-node.o mxml-search.o mxml-set.o
+ LIBOBJS		=	$(PUBLIBOBJS) mxml-private.o mxml-string.o
+ OBJS		=	mxmldoc.o testmxml.o $(LIBOBJS)
+-TARGETS		=	$(LIBMXML) mxmldoc testmxml mxml.xml doc/mxml.man
++TARGETS		=	$(LIBMXML)
+ 
+ 
+ #
+@@ -242,25 +242,25 @@
+ # autoconf stuff...
+ #
+ 
+-Makefile:	configure Makefile.in
++Makefile:	$(srcdir)/configure $(srcdir)/Makefile.in
+ 	echo Updating makefile...
+ 	if test -f config.status; then \
+ 		./config.status --recheck; \
+ 		./config.status; \
+ 	else \
+-		./configure; \
++		$(srcdir)/configure; \
+ 	fi
+ 	touch config.h
+ 
+ 
+-config.h:	configure config.h.in
++config.h:	$(srcdir)/configure $(srcdir)/config.h.in
+ 	echo Updating config.h...
+ 	autoconf
+ 	if test -f config.status; then \
+ 		./config.status --recheck; \
+ 		./config.status; \
+ 	else \
+-		./configure; \
++		$(srcdir)/configure; \
+ 	fi
+ 	touch config.h
+ 
+@@ -287,8 +287,8 @@
+ 	$(AR) $(ARFLAGS) $@ $(LIBOBJS)
+ 	$(RANLIB) $@
+ 
+-$(LIBOBJS):	mxml.h
+-mxml-entity.o mxml-file.o mxml-private.o: mxml-private.h
++$(LIBOBJS):	$(srcdir)/mxml.h
++mxml-entity.o mxml-file.o mxml-private.o: $(srcdir)/mxml-private.h
+ 
+ 
+ #

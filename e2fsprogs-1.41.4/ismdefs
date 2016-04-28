@@ -1,0 +1,20 @@
+#
+# File: ismdefs
+#
+# Copyright 2009 TiVo Inc. All Rights Reserved.
+#
+###############################################################################
+include $(ROOT)/include/make/commondefs
+
+ISM_DESCRIPTION=\
+	e2fstools
+
+ISM_VERSION=1.0
+ISM_RELEASE=1
+
+E2FSPROGS_RELEASE = e2fsprogs-1.41.4-release
+
+
+ifneq (y,$(TIVO_SERVER))
+ISM_ENABLED=1
+endif

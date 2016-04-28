@@ -1,0 +1,5 @@
+# Copyright 2014 TiVo Inc. All Rights Reserved.
+
+include $(COMMONRULES)
+include $(OPENSOURCERULES)
+

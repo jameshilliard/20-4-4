@@ -1,0 +1,13 @@
+diff -Naur gst-plugins-base-0.10.36-ORIGINAL/gst/typefind/gsttypefindfunctions.c gst-plugins-base-0.10.36-PATCHED/gst/typefind/gsttypefindfunctions.c
+--- gst-plugins-base-0.10.36-ORIGINAL/gst/typefind/gsttypefindfunctions.c	2011-12-30 05:29:17.000000000 -0800
++++ gst-plugins-base-0.10.36-PATCHED/gst/typefind/gsttypefindfunctions.c	2013-07-29 20:55:01.000000000 -0700
+@@ -1345,7 +1345,8 @@
+     g_return_if_fail (layer >= 1 && layer <= 3);
+ 
+     gst_type_find_suggest_simple (tf, prob, "audio/mpeg",
+-        "mpegversion", G_TYPE_INT, 1, "layer", G_TYPE_INT, layer, NULL);
++        "mpegversion", G_TYPE_INT, 1, "layer", G_TYPE_INT, layer,
++        "parsed", G_TYPE_BOOLEAN, FALSE, NULL);
+   }
+ }
+ 

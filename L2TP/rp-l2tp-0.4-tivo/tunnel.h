@@ -1,0 +1,17 @@
+char const *l2tp_tunnel_state_name(l2tp_tunnel *tunnel);
+l2tp_tunnel *l2tp_tunnel_find_by_my_id(uint16_t id);
+void l2tp_tunnel_xmit_control_message(l2tp_tunnel *tunnel, l2tp_dgram *dgram);
+void l2tp_tunnel_stop_tunnel(l2tp_tunnel *tunnel, char const *reason);
+void l2tp_tunnel_stop_all(char const *reason);
+void tunnel_send_ZLB(l2tp_tunnel *tunnel);
+l2tp_session *l2tp_tunnel_find_session(l2tp_tunnel *tunnel, uint16_t sid);
+void l2tp_tunnel_handle_received_control_datagram(l2tp_dgram *dgram, EventSelector *es, struct sockaddr_in *from);
+l2tp_tunnel *l2tp_tunnel_find_for_peer(l2tp_peer *peer, EventSelector *es);
+void l2tp_tunnel_delete_session(l2tp_session *ses, char const *reason);
+void l2tp_tunnel_add_session(l2tp_session *ses);
+int l2tp_num_tunnels(void);
+l2tp_session *l2tp_tunnel_next_session(l2tp_tunnel *tunnel, void **cursor);
+l2tp_session *l2tp_tunnel_first_session(l2tp_tunnel *tunnel, void **cursor);
+l2tp_tunnel *l2tp_next_tunnel(void **cursor);
+l2tp_tunnel *l2tp_first_tunnel(void **cursor);
+void l2tp_tunnel_init(EventSelector *es);

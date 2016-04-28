@@ -1,0 +1,78 @@
+config TIVO
+	bool "TiVo"
+        select ZLIB_INFLATE
+        select ZLIB_DEFLATE
+	default n
+	help
+	  Enable TiVo extensions
+
+config TIVO_IRQ_DEBUG
+        bool "Support for TiVo IRQ debugging"
+        default y
+        help    
+          TiVo IRQ debugging
+	  
+config TIVO_DEVEL
+	bool "TiVo Devel"
+	default n
+        select TIVO_CONSDBG
+	help
+	  Enable TiVo development extensions
+
+config CONTIGMEM
+	bool "TiVo Contiguous Memory Driver"
+	default n
+	help
+	  Enable TiVo contiguous memory driver
+
+config TIVO_MOJAVE
+	bool "Support for TiVo Mojave"
+	default n
+	help
+	  Enable TiVo HR22 support
+
+config TIVO_KONTIKI
+	bool "Support for TiVo Kontiki"
+        select BRCM_SKIP_CHECK_BOOTROM
+	default n
+	help
+	  Enable TiVo Kontiki support
+
+config TIVO_NEUTRON
+	bool "Support for TiVo Neutron"
+        select BRCM_SKIP_CHECK_BOOTROM
+        select TIVO_WAR_FOR_BUG303720
+	default n
+	help
+	  Enable TiVo Neutron support
+
+config TIVO_CONSDBG
+	bool "Support for TiVo Serial Console Debugging (Shift-Keys)"
+	default n
+	help
+	  Enable TiVo Serial console debugging support
+
+config TIVO_SATA_HOTPLUG
+	bool "Support for TiVo style SATA drive hotplug"
+	default n
+	help
+	  Enable TiVo Style SATA drive hotplug
+            Application has to poll for the event
+            
+config TIVO_WATCHDOG
+	tristate "Support for TiVo watchdog"
+	help
+	  Enable TiVo watchdog
+
+config TIVO_PLOG
+	bool "Support for TiVo process logger"
+	default y
+	help
+	  Enable TiVo process logger
+
+config TIVO_PANICLOG
+	bool "Support for TiVo kernel panic logger"
+	default y
+	help
+	  Enable TiVo kernel panic logger
+

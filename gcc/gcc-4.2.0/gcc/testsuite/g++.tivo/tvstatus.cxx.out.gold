@@ -1,0 +1,4 @@
+tvstatus.cxx: In function 'void TwStatusTest()':
+tvstatus.cxx:18: warning: (TiVo) status result of function call is ignored
+tvstatus.cxx: In function 'void TvStatusTest()':
+tvstatus.cxx:38: warning: (TiVo) status result of function call is ignored

@@ -1,0 +1,15 @@
+###############################################################################
+#
+# File: ismrules
+#
+# Description:
+#   Common rules used in all Makefile(s) of ISM
+#   This file is normally accessed as $(ISMRULES) by each Makefile in
+#   the ISM
+#
+# Copyright 2012 TiVo Inc.  All Rights Reserved.
+#
+###############################################################################
+
+include $(COMMONRULES)
+

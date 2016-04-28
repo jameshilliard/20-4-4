@@ -1,0 +1,11 @@
+#!/bin/sh
+for i in $(env | sed -ne '/^KBUILD_SRCTREE_[0-9][0-9][0-9]=/s/=.*//p' | sort -r)
+do
+	eval file="\$$i/$1"
+	if [ -f $file ]
+	then
+		echo $file
+		exit 0
+	fi
+done
+exit 1

@@ -1,0 +1,13 @@
+templatefunction.cxx: In function 'T* EvilTemplateFunction(T*)':
+templatefunction.cxx:12: warning: TiVo-Ref: reference counting template class parameter 'NonReffable' must be a subtype of TmkCore!
+templatefunction.cxx: In function 'void EvilFunction()':
+templatefunction.cxx:19: warning: TiVo-Ref: reference counting template class parameter 'NonReffable' must be a subtype of TmkCore!
+templatefunction.cxx: In function 'void Testing()':
+templatefunction.cxx:9: warning: TiVo-Ref: the return type 'Abstract' of function 'EvilTemplateFunction' should be assigned to a reference counting template class!
+templatefunction.cxx: In function 'T* EvilTemplateFunction(T*) [with T = Abstract]':
+templatefunction.cxx:25:   instantiated from here
+templatefunction.cxx:11: warning: TiVo-Ref: variable 'pLocal' is of type 'Abstract' and should be reference counted!
+templatefunction.cxx:12: warning: TiVo-Ref: reference counting template class parameter 'NonReffable' must be a subtype of TmkCore!
+templatefunction.cxx: In function 'T* EvilTemplateFunction(T*) [with T = NonReffable]':
+templatefunction.cxx:26:   instantiated from here
+templatefunction.cxx:12: warning: TiVo-Ref: reference counting template class parameter 'NonReffable' must be a subtype of TmkCore!

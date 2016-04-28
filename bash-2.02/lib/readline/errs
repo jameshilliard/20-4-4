@@ -1,0 +1,35 @@
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float readline.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float vi_mode.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float funmap.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float keymaps.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float parens.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float search.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float rltty.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float complete.c
+complete.c: In function `print_filename':
+complete.c:457: warning: comparison is always 1 due to limited range of data type
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float bind.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float isearch.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float display.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float signals.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float util.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float kill.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float undo.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float macro.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float input.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float callback.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float terminal.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float nls.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float history.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float histexpand.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float histfile.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float histsearch.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float shell.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float tilde.c
+/usr/local/gcc-ppc/bin/gcc -c -DHAVE_CONFIG_H -DSHELL   -I. -I/home/sstone/sandbox/devtools/bash-2.02 -I../.. -I../../lib  -g -O2 -msoft-float xmalloc.c
+rm -f libreadline.a
+/usr/local/gcc-ppc/bin/ar cr libreadline.a readline.o vi_mode.o funmap.o keymaps.o parens.o search.o rltty.o complete.o bind.o isearch.o display.o signals.o util.o kill.o undo.o macro.o input.o callback.o terminal.o nls.o history.o histexpand.o histfile.o histsearch.o shell.o tilde.o xmalloc.o
+test -n "/usr/local/gcc-ppc/bin/ranlib" && /usr/local/gcc-ppc/bin/ranlib libreadline.a
+rm -f libhistory.a
+/usr/local/gcc-ppc/bin/ar cr libhistory.a history.o histexpand.o histfile.o histsearch.o shell.o xmalloc.o
+test -n "/usr/local/gcc-ppc/bin/ranlib" && /usr/local/gcc-ppc/bin/ranlib libhistory.a

@@ -1,0 +1,21 @@
+config TIVO_VMTCD
+	bool "TiVo VM TCD kernel"
+        select ZLIB_INFLATE
+        select ZLIB_DEFLATE
+	select TIVO_DISKPARTITION
+	select TIVO_PLOG
+	default n
+	help
+	  Enable TiVo extensions
+
+config TIVO_DISKPARTITION
+	bool "TiVo Disk Parition Map"
+	default y
+	help
+	  Enable TiVo disk partition map
+
+config TIVO_PLOG
+	bool "Support for TiVo process logger"
+	default y
+	help
+	  Enable TiVo process logger

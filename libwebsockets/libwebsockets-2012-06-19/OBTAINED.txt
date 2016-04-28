@@ -1,0 +1,2 @@
+Obtained on 6/20/2012 via:
+git clone git://git.warmcat.com/libwebsockets

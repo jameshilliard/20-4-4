@@ -1,0 +1,88 @@
+config TIVO
+	bool "TiVo"
+        select ZLIB_INFLATE
+        select ZLIB_DEFLATE
+	select TIVO_DISKPARTITION
+	default n
+	help
+	  Enable TiVo extensions
+
+config TIVO_DISKPARTITION
+	bool "TiVo Disk Parition Map"
+	default y
+	help
+	  Enable TiVo disk partition map
+
+config TIVO_DEVEL
+	bool "TiVo Devel"
+	default n
+        select TIVO_CONSDBG
+	help
+	  Enable TiVo development extensions
+
+config CONTIGMEM
+	bool "TiVo Contiguous Memory Driver"
+	default n
+	help
+	  Enable TiVo contiguous memory driver
+
+config TIVO_GEN08
+    bool "Support for TiVo Gen08"
+        select BRCM_SKIP_CHECK_BOOTROM
+	default n
+	help
+	  Enable TiVo Gen08 support (Leo, etc)
+	select WEAK_REORDERING_BEYOND_LLSC 
+
+config TIVO_GEN09
+    bool "Support for TiVo Gen09"
+        select BRCM_SKIP_CHECK_BOOTROM
+	default n
+	help
+	  Enable TiVo Gen09 support (Titan)
+
+config TIVO_PAC01
+    bool "Support for Pace Pac01"
+        select BRCM_SKIP_CHECK_BOOTROM
+	default n
+	help
+	  Enable Pace Pac01 support (Pace X1B, etc)
+	select WEAK_REORDERING_BEYOND_LLSC 
+
+config TIVO_CONSDBG
+	bool "Support for TiVo Serial Console Debugging (Shift-Keys)"
+	default n
+	help
+	  Enable TiVo Serial console debugging support
+
+config TIVO_SATA_HOTPLUG
+	bool "Support for TiVo style SATA drive hotplug"
+	default n
+	help
+	  Enable TiVo Style SATA drive hotplug
+            Application has to poll for the event
+            
+config TIVO_WATCHDOG
+	bool "Support for Brcm 7418/7425 hardware watchdog"
+	default n
+	help
+	  Enable Brcm 7418/7425 hardware watchdog
+
+config TIVO_PLOG
+	bool "Support for TiVo process logger"
+	default y
+	help
+	  Enable TiVo process logger
+
+config TIVO_PANICLOG
+	bool "Support for TiVo kernel panic logger"
+	default y
+	help
+	  Enable TiVo kernel panic logger
+
+config TIVO_PANICLOG_IN_RAM
+	bool "Support for TiVo kernel panic log in RAM"
+	depends on TIVO_PANICLOG
+	default n
+	help
+	  TiVo kernel panic log is stored in RAM between reboots

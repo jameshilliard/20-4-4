@@ -1,0 +1,23 @@
+#
+# Platform dependant code
+#
+ifeq ($(KERNEL_BUILD_HPK_IMPLEMENTATION),Gen08)
+platform-$(CONFIG_BCM7344B0) += tivo/Gen08/
+platform-$(CONFIG_BCM7344A0) += tivo/Gen08/
+else
+ifeq ($(KERNEL_BUILD_HPK_IMPLEMENTATION),Gen09)
+platform-$(CONFIG_BCM7425B0) += tivo/Gen09/
+else
+ifeq ($(KERNEL_BUILD_HPK_IMPLEMENTATION),Pac01)
+platform-$(CONFIG_BCM7425B0) += tivo/Pac01/
+endif
+endif
+endif
+
+#
+# Common TiVo code
+#
+platform-$(CONFIG_BCM7344B0) += tivo/common/
+platform-$(CONFIG_BCM7344A0) += tivo/common/
+platform-$(CONFIG_BCM7425B0) += tivo/common/
+

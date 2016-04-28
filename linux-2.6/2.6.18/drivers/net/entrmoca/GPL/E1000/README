@@ -1,0 +1,169 @@
+This directory contains modified Ethernet drivers for non-Entropic chipsets.
+They are used to communicate with an EN2210 chipset running in MII datapath
+mode.
+
+./ - This directory
+  Makefile - Includes and invokes the kernel makefile
+  e100.c - Customized e100 (Intel 10/100) driver (reference only)
+  e1000*.[ch] - Customized e1000 (Intel Gigabit) driver for GMII board
+  eeprg.c - Programming utility for the 82545's serial EEPROM
+  orig/* - Original (unmodified) e100 and e1000 driver sources
+  make_diffs.sh - Generates diff files for all modified driver sources
+
+Sample usage if sources/headers for the target kernel are in /usr/src/linux:
+
+rmmod e1000_z2
+make
+sync
+insmod e1000_z2.ko
+
+Sample usage if kernel sources/headers are in /tmp/linux:
+
+rmmod e1000_z2
+make KSRC=/tmp/linux
+sync
+insmod e1000_z2.ko
+
+The e100 driver was used for Entropic internal prototyping, but also serves
+as a reference for modifying Ethernet drivers to work with the EN2210.  It
+was modified to support bitbang GPIO via the EEPROM control lines, and to
+ignore an Intel 10/100 motherboard LAN adapter on one of our test systems
+(! USE_MOBO_LAN).
+
+The e1000_z2 driver is used in conjunction with the EN2210 GMII board.
+This board has an Intel 82545 GMAC connected to an EN2210 via MII and MDIO.
+As shipped, the modified driver is configured to use the EN2210 rather than
+the onboard gigabit Ethernet PHY and magnetics.  This affects:
+
+1) Control path - MDIO operations will use SPD0/SPD1 (GPIO pins on the
+82545) instead of the hardware MDIO facility.  The hardware facility on the
+82545 is only capable of communicating with the internal gigabit PHY.
+
+2) Data path - the LINK_MODE field and some driver functions are modified
+to enable use of the external MII/GMII interface on the 82545.  This mode
+is not officially supported by Intel, but it is described in the 82545
+Software Developer's Manual.
+
+To build a version of the e1000_z2 driver that uses the Gigabit Ethernet
+port on the GMII boards, edit e1000_hw.h to undefine ZIP_2.
+
+The e1000_z2 driver identifies Entropic GMII prototype boards by using a
+slightly modified version of the EEPROM checksum function.  As a result, a
+stock e1000 driver will not recognize the Entropic boards, and the e1000_z2
+driver will not recognize standard Intel NICs.  This functionality is
+intentional.
+
+
+=====================================================================================
+The following info is for new e1000 driver:
+
+This is the upgraded E1000 driver with EN2210 support
+
+Compare with the old version e1000 driver( 6.0.54-k2 ) the new e1000 driver (8.0.1) is more strong
+, it provides good compitable with multi-platform for all kind of Linux O/S.
+
+This driver has been tested under:
+
+Linux 2.6.9   smp/no-smp
+Linux 2.6.9   64 bit smp/no-smp
+Linux 2.6.16  smp/no-smp
+Linux 2.6.24  smp/no-smp
+
+it can be compiled correctly and running without any problem.
+
+
+Changes.
+
+1. e1000.h
+   Line: 47, provides a debug message output interface
+   
+
+2. e1000_82540.c
+   Line: 46, Exclude the function static s32  e1000_set_phy_mode_82540(struct e1000_hw *hw);
+             When define the ZIP_2 macro, and it will never be used for GMII+EN2210 card driver.
+   
+   Line: 52 to 58: define several EN2210 related read/write functions.
+   
+   Line: 82 and 85: register the EN2210 MMI read/write function to the adapter layer.
+   
+   Line: 90 to 112, Disable the phy chipset checking.
+   
+   Line: 387 to 394, set LINK_MODE to use the external GMII interface, it enables the HW interface
+         between 82545 and EN2210.
+   
+   Line: 432, in function static s32 e1000_setup_copper_link_82540(struct e1000_hw *hw)
+         Exclude the e1000_set_phy_mode_82540() function, because the phy changed to EN2210, so it
+         is illegel to set the other type phy mode here.
+   
+   Line: 600 to 649, static s32 e1000_set_phy_mode_82540(struct e1000_hw *hw)
+         Exclude this function, because it is no meaning for this board.
+   
+   Line: 704 to End of this file.
+         Create the follow function for talking with EN2210 via MMI bus.
+         static s32 e1000_read_phy_reg_en2210(struct e1000_hw *hw, u32 offset, u16 *data)
+         static s32 e1000_write_phy_reg_en2210(struct e1000_hw *hw, u32 offset, u16 data)
+         static void e1000_raise_mdi_clk_en2210(struct e1000_hw *hw, u32 *ctrl)
+         static void e1000_lower_mdi_clk_en2210(struct e1000_hw *hw, u32 *ctrl)
+         static void e1000_shift_out_mdi_bits_en2210(struct e1000_hw *hw, u32 data,u16 count)
+         static u16 e1000_shift_in_mdi_bits_en2210(struct e1000_hw *hw)
+         
+3. e1000_defines.h
+   Line 117: #define E1000_CTRL_EXT_LINK_MODE_EXT  0x00400000  
+  
+   Line: 133 to 141, Modify the E1000_CTRL_EXT_BITS definition when ZIP_2 is enabled.
+  
+   Line: 384 to 400, Define the MDIO/MDC register here.
+  
+   Line: 1125 to 1147, Define the EEPROM check sum and other flags.
+  
+4. e1000_hw.h
+  
+   Line: 596 to 603  struct e1000_phy_info
+         Append the EN2210 operation control vars here.
+  
+  
+5. e1000_nvm.c
+  
+   Line 835 to 870:  Add the init code for verfiy the EEPROM and get the settings from data stored in EEPROM.
+  
+   Line 883, s32 e1000_validate_nvm_checksum_generic(struct e1000_hw *hw)
+        Modify this function, check the Entropic special check sum, in order to impact with the real E1000 ethernet card.
+  
+6. kcompat.h
+  
+   Line 84 to 95: define the ZIP_2 macro, if user want compile a driver without the EN2210 support, then they can disable 
+                  the ZIP_2 and GMII_PROTO macros here.
+  
+  
+7. e1000_main.c
+   Line 54 to 69, Define the EN2210+82545 driver name string here.
+  
+   Line 202 to 205,   function pre-define
+   Line 4503 to 4506, e1000_ioctl
+   Line 4560 to 4584, e1000_priv_ioctl()
+        Add a function: e1000_priv_ioctl() here, to provide the ioctl interface with the c.link daemon.
+        And enable the MII_IOCTL here in the e1000_ioctl function.
+  
+   Line 270,
+   Line 224, 
+   Line 4875,
+        Disable the Power Management for the EN2210+82545 board
+  
+   Line 907 to 937, 
+        Change the EEPROM verfiy method, provide detail check for the fail reason here.
+  
+  
+   Line 4524, In function int e1000_mii_ioctl()
+        Modify the register read/writer interface here, let it can talk with EN2210 here.
+             
+8 Makefile
+
+    Change the DRIVER_NAME to e1000_z2, then the driver module name will be e1000_z2.ko, 
+    and it be used when the PC has another Intel network card with same e1000 driver.
+    Create a new DRIVER_NAME_M=e1000 to be used for the driver compile process, since it will 
+    automatic generate a DRIVER_E1000 macro in this makefile, that will be used in the source code.
+
+    Notice:
+    This Makefile is not include the eeprg.c, so if anyone want to use this tool, it should be compiled
+    by hand!
+   

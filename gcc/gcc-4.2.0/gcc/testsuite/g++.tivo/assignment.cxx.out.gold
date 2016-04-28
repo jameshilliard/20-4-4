@@ -1,0 +1,4 @@
+assignment.cxx: In function 'ref<TmkCore> Bad(TmkCore*)':
+assignment.cxx:6: warning: TiVo-Ref: illegal assignment to a pointer to a reference counted parameter 'pCore' that is of a type 'TmkCore'; such assignments must be reference counted!
+assignment.cxx:11: warning: TiVo-Ref: illegal assignment to a pointer to a reference counted parameter 'pCore' that is of a type 'TmkCore'; such assignments must be reference counted!
+assignment.cxx:12: warning: TiVo-Ref: illegal assignment to a pointer to a reference counted parameter 'pCore' that is of a type 'TmkCore'; such assignments must be reference counted!

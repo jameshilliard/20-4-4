@@ -1,0 +1,592 @@
+
+# This file contains code to build vmlinux, System.map and modules.
+# It contains code to install the kernel and modules.
+# It also contains nodepend() commands for files that are created by the top
+# level Makefile and are referenced by Makefile.in files.
+# It contains the code to maintain the clean and mrproper lists.
+# It expands any additional rules required by distributions.
+# It must not contain code for any other part of the kernel.
+
+# Optional tools that are only used in the global Makefile.  These may be used
+# if available but kbuild will run without them.  In other words, you do not
+# have to install these tools to build a kernel.  Use of these tools may or may
+# not be checked for KBUILD_WRITABLE, if they are invoked via user_command()
+# then pp_makefile5 will check for KBUILD_WRITABLE, if these tools are used in
+# hand crafted rules then they are not checked.
+
+PERL	        := perl
+
+# Required tools that are only used in the global Makefile.
+
+DEPMOD		:= /sbin/depmod
+# KALLSYMS	:= /sbin/kallsyms
+KALLSYMS	= $(TOOLROOT)/bin/$(TARGET_PREFIX)kallsyms
+# FIXME: not supported in kbuild 2.5, waiting for modutils 2.5 rewrite. KAO
+# GENKSYMS	:= /sbin/genksyms
+
+# ---------  Start of building vmlinux, System.map and modules  ---------
+
+# scripts/pp_makefile4 inserts the list of module objects here.
+
+vmlinux_modules	:= $(__pp_vmlinux_modules)
+
+# Link order information to build vmlinux.
+
+link_subdirs(init)
+link_subdirs($(arch_init_subdirs))
+
+link_subdirs(kernel)
+link_subdirs(mm)
+link_subdirs(fs)
+link_subdirs(ipc)
+
+# FIXME: Built from the DRIVERS definitions in the old Makefile.  Some of this
+# is just to link intermediate objects into the kernel, some of it is link order
+# specific but the old Makefile had no documentation.  Preserve the old list,
+# even though most of it is unnecessary.  The problem is, we do not know which
+# bits are necessary because they have link order requirements.  Anybody feeling
+# brave?  KAO
+
+link_subdirs(drivers/acpi)
+link_subdirs(drivers/parport)
+link_subdirs(drivers/char)
+link_subdirs(drivers/block)
+link_subdirs(drivers/misc)
+link_subdirs(drivers/net)
+link_subdirs(drivers/media)
+link_subdirs(drivers/char/agp)
+link_subdirs(drivers/char/drm)
+link_subdirs(drivers/char/drm-4.0)
+link_subdirs(drivers/nubus)
+link_subdirs(drivers/net/fc)
+link_subdirs(drivers/net/appletalk)
+link_subdirs(drivers/net/tokenring)
+link_subdirs(drivers/net/wan)
+link_subdirs(drivers/net/arcnet)
+link_subdirs(drivers/atm)
+link_subdirs(drivers/ide)
+link_subdirs(drivers/fc4)
+link_subdirs(drivers/scsi)
+link_subdirs(drivers/message/fusion)
+link_subdirs(drivers/ieee1394)
+link_subdirs(drivers/cdrom)
+link_subdirs(drivers/sound)
+link_subdirs(drivers/pci)
+link_subdirs(drivers/mtd)
+link_subdirs(drivers/pcmcia)
+link_subdirs(drivers/net/pcmcia)
+link_subdirs(drivers/net/wireless)
+link_subdirs(drivers/char/pcmcia)
+link_subdirs(drivers/dio)
+link_subdirs(drivers/sbus)
+link_subdirs(drivers/zorro)
+link_subdirs(drivers/fc4)
+link_subdirs(drivers/macintosh)
+link_subdirs(drivers/pnp)
+link_subdirs(drivers/sgi)
+link_subdirs(drivers/video)
+link_subdirs(drivers/block/paride)
+link_subdirs(drivers/net/hamradio)
+link_subdirs(drivers/tc)
+link_subdirs(drivers/usb)
+link_subdirs(drivers/input)
+link_subdirs(drivers/message/i2o)
+link_subdirs(drivers/net/irda)
+link_subdirs(drivers/i2c)
+link_subdirs(drivers/telephony)
+link_subdirs(drivers/md)
+link_subdirs(drivers/bluetooth)
+link_subdirs(drivers/hotplug)
+link_subdirs(drivers/isdn)
+
+link_subdirs(arch/$(ARCH))
+link_subdirs($(arch_drivers_subdirs))
+
+link_subdirs(net)
+
+link_subdirs($(arch_libs))
+link_subdirs(lib)
+
+ifsel(CONFIG_KDB)
+	link_subdirs(kdb)
+endif
+
+# ---------  Start of vmlinux code ---------
+
+# scripts/pp_makefile4 inserts the list of non-module objects here.
+
+vmlinux_objects		:= $(__pp_vmlinux_objects)
+
+# vmlinux only depends on init/version.o.  That file is updated if and only if
+# anything that affects the link of vmlinux has changed.  The dependency chain
+# has to be done in this order to force new version data to be built before
+# linking vmlinux.
+
+# Variable vmlinux_depends contains everything that vmlinux depends on, excluding
+# compile.h.  The variable is set here but is tested in init/Makefile.in.
+
+ifndef arch_ld_script
+  arch_ld_script	:= $(objfile /arch/$(ARCH)/vmlinux.lds.i)
+endif
+
+# The key we use to sign the kernel varies according to the HPK
+# implementation.  >= Gen05 uses the new 1504-bit key while all
+# others use the old 894-bit key
+
+SIGNING_KEY		:= $(ROOT)/tvlib/keys/kernel-dev.prv
+ifeq ($(KERNEL_BUILD_HPK_IMPLEMENTATION),Gen05)
+  SIGNING_KEY		:= $(ROOT)/tvlib/keys/kernel-long_dev.prv
+endif
+ifeq ($(KERNEL_BUILD_HPK_IMPLEMENTATION),Gen06)
+  SIGNING_KEY		:= $(ROOT)/tvlib/keys/kernel-long_dev.prv
+endif
+
+
+vmlinux_depends		:= $(arch_ld_script) $(arch_head) $(vmlinux_objects)
+
+$(objfile .tmp_vmlinux_objects): $(objfile .tmp_vmlinux_objects_new)
+	$(KBUILD_QUIET)cmp -s $< $@ || ($(check_writable) && cp -fa $< $@)
+
+$(objfile .tmp_vmlinux_modules): $(objfile .tmp_vmlinux_modules_new)
+	$(KBUILD_QUIET)cmp -s $< $@ || ($(check_writable) && cp -fa $< $@)
+
+ld_vmlinux	:= $(LD_real) $(arch_linkflags) $(arch_head) --start-group -T $(objfile .tmp_vmlinux_objects) --end-group
+ifsel(CONFIG_KALLSYMS)
+  user_command(vmlinux
+	($(objfile /init/version.o) $(objfile .tmp_vmlinux_objects))
+	(set -e;
+	  echo "  kallsyms pass 1";
+	  $(ld_vmlinux) -o $(objfile .tmp_vmlinux1);
+	  $(KALLSYMS) $(objfile .tmp_vmlinux1) > $(objfile .tmp_kallsyms1.o);
+	  echo "  kallsyms pass 2";
+	  $(ld_vmlinux) $(objfile .tmp_kallsyms1.o) -o $(objfile .tmp_vmlinux2);
+	  $(KALLSYMS) $(objfile .tmp_vmlinux2) > $(objfile .tmp_kallsyms2.o);
+	  echo "  kallsyms pass 3";
+	  $(ld_vmlinux) $(objfile .tmp_kallsyms2.o) -o $(objfile .tmp_vmlinux3);
+	  $(KALLSYMS) $(objfile .tmp_vmlinux3) > $(objfile .tmp_kallsyms3.o);
+	  $(ld_vmlinux) $(objfile .tmp_kallsyms3.o) -o $@; )
+	()
+	)
+  side_effect(.tmp_kallsyms1.o vmlinux)
+  side_effect(.tmp_kallsyms2.o .tmp_kallsyms1.o)
+  side_effect(.tmp_kallsyms3.o .tmp_kallsyms2.o)
+else
+  user_command(vmlinux
+	($(objfile /init/version.o) $(objfile .tmp_vmlinux_objects))
+	($(ld_vmlinux) -o $@;
+	  $(OBJDUMP) -d $@ > $@.dis; )
+	()
+	)
+endif
+
+user_command(System.map
+	($(objfile vmlinux))
+	($(NM) $< | grep -v "\(compiled\)\|\(\.o$$\)\|\( [aUw] \)\|\(\.\.ng$$\)\|\(LASH[RL]DI\)" | sort > $@)
+	()
+	)
+
+installable(CONFIG_TIVO vmlinux.px)
+
+user_command(vmlinux.info
+	($(objfile /vmlinux))
+	($(srcfile /scripts/elfextract) $(objfile /vmlinux) $(objfile /vmlinux))
+	()
+)
+
+user_command(vmlinux.hdr
+	($(objfile /vmlinux.info))
+	($(srcfile /scripts/makepxhdr) $(objfile /vmlinux.info) $(objfile /vmlinux.hdr))
+	()
+)
+
+user_command(vmlinux.data
+	($(objfile /vmlinux) $(objfile /vmlinux.hdr))
+	(set -e;
+	  $(OBJCOPY) -O binary $(objfile /vmlinux) $(objfile /vmlinux.data0);
+	  cat $(objfile /vmlinux.hdr) $(objfile /vmlinux.data0) >$(objfile /vmlinux.data);
+	  rm -f $(objfile /vmlinux.data0)
+	)
+	()
+)
+
+user_command(vmlinux.sig
+	($(objfile /vmlinux.data))
+	($(TOOLROOT)/tvbin/ksign -sfh $(SIGNING_KEY) $(objfile /vmlinux.data) >$(objfile /vmlinux.sig))
+	()
+)
+
+user_command(vmlinux.px
+	($(objfile /vmlinux.data) $(objfile /vmlinux.sig))
+	(set -e;
+	  $(srcfile /scripts/makepxfile) $(objfile /vmlinux.info) $(objfile /vmlinux.data) $(objfile /vmlinux.sig) $(objfile /vmlinux.px);
+	  $(STRIP) -R .reginfo -R .mdebug -R .comment -R .net $(objfile vmlinux) -o $(objfile vmlinux.stripped;)
+	)
+	()
+)
+
+# ---------  Start of vmlinuz code ---------
+
+installable(CONFIG_VMLINUZ vmlinuz)
+
+user_command(vmlinuz
+	($(objfile /vmlinux))
+	(set -e;
+	  $(OBJCOPY) --strip-all $(objfile /vmlinux) $(objfile .tmp_vmlinuz);
+	  rm -f $(objfile .tmp_vmlinuz.gz);
+	  $(GZIP_COMMAND) -9 $(objfile .tmp_vmlinuz);
+	  mv -f $(objfile .tmp_vmlinuz.gz) $@;
+	)
+	()
+	)
+
+# ---------  Start of tftpboot.img code ---------
+
+installable(CONFIG_TFTPBOOT tftpboot.img)
+
+user_command(tftpboot.img
+	($(objfile /vmlinux))
+	(set -e;
+	  $(OBJCOPY) --strip-all $(objfile /vmlinux) $(objfile .tmp_tftpboot);
+	  rm -f $@;
+	  elftoaout -o $@ $(objfile .tmp_tftpboot);
+	)
+	()
+	)
+
+# ---------  Start of vmlinux.srec code ---------
+
+installable(CONFIG_VMLINUX_SREC vmlinux.srec)
+
+user_command(vmlinux.srec
+	($(objfile /vmlinux))
+	(set -e;
+	  $(OBJCOPY) -Osrec $(objfile /vmlinux) $(objfile /vmlinux.srec);
+	)
+	()
+	)
+
+# ---------  Start of vmlinux.bin code ---------
+
+installable(CONFIG_VMLINUX_BIN vmlinux.bin)
+
+user_command(vmlinux.bin
+	($(objfile /vmlinux))
+	(set -e;
+	  $(OBJCOPY) -Obinary $(objfile /vmlinux) $(objfile /vmlinux.bin);
+	)
+	()
+	)
+
+# ---------  Start of install ---------
+
+# Warning: When you compile as a normal user and install as root, you must do a
+#          clean kbuild with full makefile generation as the normal user before
+#          running install as root.  Failure to heed this warning may result in
+#          an incorrect install.  In particular, changes to the install code
+#          below will not take effect until you do a clean kbuild with full
+#          makefile generation.
+
+# List all standard kernel formats and locations for all architectures.
+ifsel(CONFIG_VMLINUX)
+  KERNELFULLNAME	:= vmlinux
+endif
+ifsel(CONFIG_VMLINUZ)
+  KERNELFULLNAME	:= vmlinuz
+endif
+ifsel(CONFIG_VMLINUX_SREC)
+  KERNELFULLNAME	:= vmlinux.srec
+endif
+ifsel(CONFIG_VMLINUX_BIN)
+  KERNELFULLNAME	:= vmlinux.bin
+endif
+ifsel(CONFIG_BZIMAGE)
+  KERNELFULLNAME	:= arch/$(ARCH)/boot/bzImage
+endif
+ifsel(CONFIG_ZIMAGE)
+  KERNELFULLNAME	:= arch/$(ARCH)/boot/zImage
+endif
+# The only code that uses ecoff is mips so make this arch specific for now.  If
+# another arch wants ecoff format, somebody has to write an arch independent
+# version of elf2ecoff and move vmlinux.ecoff to the top level.
+ifsel(CONFIG_VMLINUX_ECOFF)
+  KERNELFULLNAME	:= arch/$(ARCH)/boot/vmlinux.ecoff
+endif
+
+KERNELBASENAME		:= $(shell echo "$(KERNELFULLNAME)" | sed -e 's:.*/\([^/][^/]*\)/*$$:\1:')
+export KERNELFULLNAME KERNELBASENAME
+
+# Mega kludge.  CML1 cannot consistently handle ${VARIABLE} in a string, some
+# configurators expand them, some do not.  kbuild needs the variables to be left
+# alone in .config, so a config can be copied from one kernel to another and
+# pick up the new values.  To overcome the CML1 inconsistencies, use VARIABLE in
+# the strings and convert words starting with upper case and consisting of upper
+# case, 0-9 and _ to ${VARIABLE} then eval the result to expand it.  Be careful
+# to only apply this conversion to CONFIG_ variables, in particular do not apply
+# it to $(KERNELRELEASE), that can contain upper case words which must be left
+# alone.
+
+uppercasetovar	:= sed -e 's/\([^A-Za-z0-9_]\)/:\1:/g; s/:\([A-Z][A-Z0-9_]*\):/:$${\1}:/g; s/:\([^A-Za-z0-9_]\):/\1/g'
+
+# Evaluate the install variables, replacing upper case strings with variables.
+# Because exported variables are not available to $(shell) commands, jump
+# through hoops to get the required variables into the environment.
+
+export   CONFIG_INSTALL_PREFIX_NAME
+override CONFIG_INSTALL_PREFIX_NAME	:= \
+	$(shell KERNELFULLNAME=$(KERNELFULLNAME) KERNELBASENAME=$(KERNELBASENAME) \
+	$(KBUILD_SHELL) -c "echo $$(echo \"$(CONFIG_INSTALL_PREFIX_NAME)\" | $(uppercasetovar))")
+export   CONFIG_INSTALL_KERNEL_NAME
+override CONFIG_INSTALL_KERNEL_NAME	:= \
+	$(shell KERNELFULLNAME=$(KERNELFULLNAME) KERNELBASENAME=$(KERNELBASENAME) \
+	$(KBUILD_SHELL) -c "echo $$(echo \"$(CONFIG_INSTALL_KERNEL_NAME)\" | $(uppercasetovar))")
+export   CONFIG_INSTALL_SYSTEM_MAP_NAME
+override CONFIG_INSTALL_SYSTEM_MAP_NAME	:= \
+	$(shell KERNELFULLNAME=$(KERNELFULLNAME) KERNELBASENAME=$(KERNELBASENAME) \
+	$(KBUILD_SHELL) -c "echo $$(echo \"$(CONFIG_INSTALL_SYSTEM_MAP_NAME)\" | $(uppercasetovar))")
+export   CONFIG_INSTALL_CONFIG_NAME
+override CONFIG_INSTALL_CONFIG_NAME	:= \
+	$(shell KERNELFULLNAME=$(KERNELFULLNAME) KERNELBASENAME=$(KERNELBASENAME) \
+	$(KBUILD_SHELL) -c "echo $$(echo \"$(CONFIG_INSTALL_CONFIG_NAME)\" | $(uppercasetovar))")
+export   CONFIG_INSTALL_VMLINUX_NAME
+override CONFIG_INSTALL_VMLINUX_NAME	:= \
+	$(shell KERNELFULLNAME=$(KERNELFULLNAME) KERNELBASENAME=$(KERNELBASENAME) \
+	$(KBUILD_SHELL) -c "echo $$(echo \"$(CONFIG_INSTALL_VMLINUX_NAME)\" | $(uppercasetovar))")
+export   CONFIG_INSTALL_SCRIPT_NAME
+override CONFIG_INSTALL_SCRIPT_NAME	:= \
+	$(shell KERNELFULLNAME=$(KERNELFULLNAME) KERNELBASENAME=$(KERNELBASENAME) \
+	$(KBUILD_SHELL) -c "echo $$(echo \"$(CONFIG_INSTALL_SCRIPT_NAME)\" | $(uppercasetovar))")
+
+kernel_target		:= $(CONFIG_INSTALL_PREFIX_NAME)$(CONFIG_INSTALL_KERNEL_NAME)
+System.map_target	:= $(CONFIG_INSTALL_PREFIX_NAME)$(CONFIG_INSTALL_SYSTEM_MAP_NAME)
+.config_target		:= $(CONFIG_INSTALL_PREFIX_NAME)$(CONFIG_INSTALL_CONFIG_NAME)
+vmlinux_target		:= $(CONFIG_INSTALL_PREFIX_NAME)$(CONFIG_INSTALL_VMLINUX_NAME)
+module_dir		:= $(CONFIG_INSTALL_PREFIX_NAME)/lib/modules/$(KERNELRELEASE)/
+
+dirname		:= sed -e 's:"::g; s:/*$$::; s:\(..*\)/.*:\1:'
+
+# After a clean build of the installable data, update the global makefile to
+# reflect the commands just used.  Without this post update, make install can
+# fail because the makefile is not completely up to date.
+
+.PHONY: installable
+
+installable(System.map $(vmlinux_modules) .tmp_vmlinux_objects .tmp_vmlinux_modules)
+
+installable:
+ifeq ($(NO_MAKEFILE_GEN),)
+  ifeq ($(KBUILD_WRITABLE),y)
+	@echo "  Updating global makefile with final commands"
+	@cd $(KBUILD_OBJTREE) && \
+	  $(KBUILD_TIME) $(scripts_objtree)pp_makefile4 $(PP_MAKEFILE4_FLAGS)
+	@echo "  Global makefile is ready for install"
+	@rm -f $(objfile .tmp_no_makefile_gen)
+  endif
+endif
+	@/bin/true
+
+.PHONY: install install_with_errors
+install install_with_errors: kernel_install modules_install
+ifneq ($(CONFIG_INSTALL_SCRIPT_NAME),)
+	@echo '  Running post-install script, $(CONFIG_INSTALL_SCRIPT_NAME)'
+	$(KBUILD_QUIET)$(CONFIG_INSTALL_SCRIPT_NAME)
+endif
+
+ifneq ($(filter install_with_errors,$(MAKECMDGOALS)),)
+  install_with_errors	:= y
+endif
+
+.PHONY: install_check
+ifdef install_with_errors
+  install_check:
+	@echo "**** Using install_with_errors, this build may be incomplete but you have forced the install anyway ****";
+else
+  install_check: installable
+	@if [ -e $(objfile .tmp_no_makefile_gen) ]; then \
+	  if [ -z "$(I_KNOW_THAT_THIS_BUILD_MAY_BE_INCOMPLETE_BUT_I_WANT_TO_INSTALL_IT_ANYWAY)" ]; then \
+	    echo "Error: the previous kbuild used NO_MAKEFILE_GEN, install is not safe"; \
+	    echo "       You must do a clean kbuild without NO_MAKEFILE_GEN before doing install"; \
+	    /bin/false; \
+	  else  \
+	    echo ""; \
+	    echo "**** This build may be incomplete but you have forced the install anyway ****"; \
+	    echo ""; \
+	  fi \
+	fi
+endif
+
+ifneq ($(findstring /lib/modules,$(kernel_target)$(System.map_target)$(vmlinux_target)$(.config_target)),)
+  kernel_install: modules_install
+endif
+
+# Do not use cp -a here, the files must install as root, not builder.
+
+.PHONY: kernel_install
+kernel_install: install_check
+	@echo '  Installing $(KERNELFULLNAME) as $(kernel_target)'
+	$(KBUILD_QUIET)mkdir -p $$(echo $(kernel_target) | $(dirname))
+	$(KBUILD_QUIET)cp -f $(KERNELFULLNAME) $(kernel_target)
+ifneq ($(CONFIG_INSTALL_SYSTEM_MAP_NAME),)
+	@echo '  Installing System.map as $(System.map_target)'
+	$(KBUILD_QUIET)mkdir -p $$(echo $(System.map_target) | $(dirname))
+	$(KBUILD_QUIET)cp -f System.map $(System.map_target)
+endif
+ifneq ($(CONFIG_INSTALL_VMLINUX_NAME),)
+	@echo '  Installing vmlinux for debugging as $(vmlinux_target)'
+	$(KBUILD_QUIET)mkdir -p $$(echo $(vmlinux_target) | $(dirname))
+	$(KBUILD_QUIET)cp -f vmlinux $(vmlinux_target)
+endif
+ifneq ($(CONFIG_INSTALL_CONFIG_NAME),)
+	@echo '  Installing .config as $(.config_target)'
+	$(KBUILD_QUIET)mkdir -p $$(echo $(.config_target) | $(dirname))
+	$(KBUILD_QUIET)cp -f .config $(.config_target)
+endif
+
+# Run depmod after installing modules.  This is only for convenience to give the
+# initial boot a modules.dep even before / is mounted read-write.  However the
+# boot script depmod is the master version.
+
+# Always create $(module_dir)kernel.  depmod uses that name to work out if the
+# parent directory is type 1 or 2, without the kernel subdir, depmod assumes
+# type 2 and does not apply the prune list.
+
+# Do not use cp -a here, the modules must install as root, not builder.
+
+ifneq ($(CONFIG_INSTALL_PREFIX_NAME),)
+  depmod_opts	:= -r -b $(CONFIG_INSTALL_PREFIX_NAME)
+endif
+
+.PHONY: modules_install
+modules_install: install_check
+	@echo "  Installing modules in $(module_dir)"
+	$(KBUILD_QUIET)set -e; \
+	  mkdir -p $(module_dir); \
+	  rm -f $(module_dir)build; \
+	  ln -sf $(KBUILD_SRCTREE_000) $(module_dir)build; \
+	  rm -rf $(module_dir)kernel; \
+	  mkdir $(module_dir)kernel; \
+	  sed -e "s:^:$(module_dir)kernel/:" $(objfile .tmp_vmlinux_modules) | $(dirname) | sort | uniq | xargs -r mkdir -p; \
+	  sed -e "s:\(.*\):cp \1 $(module_dir)kernel/\1:" $(objfile .tmp_vmlinux_modules) | $(KBUILD_SHELL)
+	@echo "  Running depmod, $(DEPMOD) -ae -F $(objfile System.map) $(depmod_opts) $(KERNELRELEASE)"
+	$(KBUILD_QUIET)$(DEPMOD) -ae -F $(objfile System.map) $(depmod_opts) $(KERNELRELEASE)
+
+
+# ---------  Start of miscellaneous targets and definitions ---------
+
+# This used to be called dummy but FORCE_BUILD is more descriptive.
+# FORCE_BUILD_COMMAND has the same effect, it has a different name to make it
+# easier to understand 'make -d' output.
+.PHONY: FORCE_BUILD FORCE_BUILD_COMMAND
+FORCE_BUILD: ;
+FORCE_BUILD_COMMAND: ;
+
+# Whenever the global Makefile is processed, save the CLEAN and MRPROPER list.
+# The lists are cumulative so anything that might have been built is recorded,
+# even if the config is later changed.  This just creates the lists, the top
+# level Makefile removes the files.  That way you do not need a working .config
+# and global makefile to make clean or mrproper.
+
+.PHONY: clean mrproper
+clean:
+	$(KBUILD_QUIET)set -e; \
+	  (echo "$(CLEAN)"; \
+	    [ ! -e $(objfile .tmp_clean) ] || cat $(objfile .tmp_clean)) | \
+	  tr ' ' '\n' | \
+	  sort -u -o $(objfile .tmp_clean)
+
+mrproper:
+	$(KBUILD_QUIET)set -e; \
+	  (echo "$(MRPROPER)"; \
+	    [ ! -e $(objfile .tmp_mrproper) ] || cat $(objfile .tmp_mrproper)) | \
+	  tr ' ' '\n' | \
+	  sort -u -o $(objfile .tmp_mrproper)
+
+# Single shot rule to force setup to be checked but without automatic flow on
+# from changed files to the rest of the kbuild.  Everything depends on
+# .tmp_setup so setup is checked, any files changed by setup will be picked up
+# by the implicit dependency graph.
+
+.tmp_setup:    setup
+	@[ -e $@ ] || touch 0101000090 $@
+
+.PHONY: setup
+setup: clean mrproper
+	@/bin/true
+
+# nodepend() for stuff created by top level Makefile and used by any Makefile.in.
+
+nodepend(include/linux/autoconf.h)
+nodepend(include/linux/uts_release.h)
+nodepend(include/linux/version.h)
+nodepend(include/linux/modversions.h)
+nodepend(A_version)
+
+# Users may mix phase<n> with real targets so add dummy rules for phase<n>.
+.PHONY: phase1 phase2 phase3 phase4 phase5
+phase1 phase2 phase3 phase4 phase5:
+	@/bin/true
+
+# For people who do make oldconfig dep ... in kbuild 2.5
+dep:
+	@echo "I am sure that you are aware that make dep is not required in kbuild 2.5"
+	@echo "so you will not mind if I ignore make dep, will you?"
+
+# Distributions want to do different post build actions.  Instead of adding
+# rules for every package manager, allow for up to 10 additional rules.  For
+# each rule, the user/distribution can define:
+#    ADDn= the targets to be built by the rule.
+#    ADDn_DEP= the targets that it depends on.
+#    ADDn_CMD= the commands to execute.  Can be multiple commands separated by
+#      ';' but would normally be a distribution supplied script.
+# The nice thing about this method is that all the work of defining and
+# maintaining the targets, dependencies and commands falls on the distributions
+# that want to do something special, not the kbuild group :).
+
+ifneq ($(ADD0),)
+$(ADD0): $(ADD0_DEP)
+	$(ADD0_CMD)
+endif
+
+ifneq ($(ADD1),)
+$(ADD1): $(ADD1_DEP)
+	$(ADD1_CMD)
+endif
+
+ifneq ($(ADD2),)
+$(ADD2): $(ADD2_DEP)
+	$(ADD2_CMD)
+endif
+
+ifneq ($(ADD3),)
+$(ADD3): $(ADD3_DEP)
+	$(ADD3_CMD)
+endif
+
+ifneq ($(ADD4),)
+$(ADD4): $(ADD4_DEP)
+	$(ADD4_CMD)
+endif
+
+ifneq ($(ADD5),)
+$(ADD5): $(ADD5_DEP)
+	$(ADD5_CMD)
+endif
+
+ifneq ($(ADD6),)
+$(ADD6): $(ADD6_DEP)
+	$(ADD6_CMD)
+endif
+
+ifneq ($(ADD7),)
+$(ADD7): $(ADD7_DEP)
+	$(ADD7_CMD)
+endif
+
+ifneq ($(ADD8),)
+$(ADD8): $(ADD8_DEP)
+	$(ADD8_CMD)
+endif
+
+ifneq ($(ADD9),)
+$(ADD9): $(ADD9_DEP)
+	$(ADD9_CMD)
+endif

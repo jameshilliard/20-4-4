@@ -1,0 +1,27 @@
+###############################################################################
+#
+# File: ismdefs
+#
+# Description:
+#   Common definitions for building each ISM.
+#   This file is normally accessed as $(ISM_DEPTH)/ismdefs by each
+#   Makefile in the ISM
+#
+# Copyright 2012 TiVo Inc.  All Rights Reserved.
+#
+###############################################################################
+
+include $(ROOT)/include/make/commondefs
+
+###############################################################################
+
+ISM_DESCRIPTION = DirectFB
+ISM_VERSION = 1.0
+ISM_RELEASE = 1
+
+GENERATED_BOM_DIR := $(ISM_DEPTH)/obj/$(TIVO_SYSTEM)/bom-generated
+
+DIRECTFB_RELEASE = DirectFB-1.4.5
+
+ISMRULES = $(ISM_DEPTH)/ismrules
+

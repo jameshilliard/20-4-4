@@ -1,0 +1,10 @@
+ref.h: In instantiation of 'refConst<Recording>':
+newtest.cxx:6:   instantiated from here
+ref.h:221: warning: TiVo-Ref: field 'ptrM' is of type 'Recording' and should be reference counted!
+ref.h: In instantiation of 'referenceNot<Recording>':
+newtest.cxx:7:   instantiated from here
+ref.h:253: warning: TiVo-Ref: field 'ptrM' is of type 'Recording' and should be reference counted!
+ref.h: In instantiation of 'abRefthis<Recording>':
+newtest.cxx:8:   instantiated from here
+ref.h:237: warning: TiVo-Ref: field 'ptrM' is of type 'Recording' and should be reference counted!
+newtest.cxx:19: warning: TiVo-Ref: variable 'var7' is of type 'Recording' and should be reference counted!

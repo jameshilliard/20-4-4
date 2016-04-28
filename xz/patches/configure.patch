@@ -1,0 +1,11 @@
+diff -Naur xz-5.0.5/configure xz-5.0.5.mod/configure
+--- xz-5.0.5/configure	2013-06-30 06:17:54.000000000 -0700
++++ xz-5.0.5.mod/configure	2014-05-13 17:16:34.000000000 -0700
+@@ -18060,7 +18060,6 @@
+ 			-Wvla \
+ 			-Wformat=2 \
+ 			-Winit-self \
+-			-Wmissing-include-dirs \
+ 			-Wstrict-aliasing \
+ 			-Wfloat-equal \
+ 			-Wundef \

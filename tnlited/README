@@ -1,0 +1,78 @@
+
+Welcome to my single-processed, uber-light-weight telnetd.
+
+It probably, all things considered, is much too light, but, it will
+successfully launch /bin/login and let users login and do their
+thing.  However, it doesn't do a whole lot of things, some of which
+would be trivial to add, and some of which are a little more
+excessive.  None of them, however, are required for my needs right at
+this second (which involve launching a bbs, not a login shell.  A list
+of known significant flaws is included at the end of this file.  I
+don't recommend launching a login with it until it's been tested some
+more, really...)
+
+Well, here's some brief documentation:
+
+It's invoked like "tnlited <port> <program to spawn>".  Where port,
+obviously, is the decimal port, and the other is what gets run when it
+all happens.  feel free to specify options to the program, they'll get
+passed.  Upon starting, if DEBUG was not defined at compile time, it
+will jump off into the background and wait for connections, then
+handle them when they come in.  Otherwise, it stays in the foreground
+and prints out semi-useful status/debugging information.
+
+It should be run as root.  if it's not, we can't set up the terminal
+information correctly.  I don't think there's much that's
+fundamentally insecure within the program itself, we don't strcpy()
+blindly, or things like that, but that's by no means a guarantee.
+
+To make it die, kill it.  It tries to clean up after itself, but it
+usually fails miserably.  I don't know why, and sometimes it works.
+See the note below about TIOSIG.
+
+Hopefully, this code will get fixed.  But, in the mean time, play with
+it, enjoy it, or fix it to do what you need if you feel like it.  
+
+
+Here are the areas in which it is quite badly lacking:
+
+Small additions (likely to appear in the near future) --
+
+display an /etc/issue.net like file.
+
+determine where the connection from and do something intellegent with
+that data, like blacklist it, or at least announce to the called
+program what it is.
+
+Larger (and much more significant additions) --
+
+actually handle some kind of telnet options.  right now, everything
+execpt for a NAWS request happily is refused by the server.  fun.
+really, though, this would mean truly integrating some kind of a
+telnet state machine.
+
+integrate with, or at least follow properly, tcp
+wrappers/conventions.  Not doing this sucks.
+
+do bigger telnet things, like LINEMODE, or maybe some kind of flow
+control, or getting the originating enviornment.
+
+Bugs/Kludges --
+
+In order to get telnet to properly negotiate on startup, we spin our
+data out of the buffer, then sleep, then do it again.  This sucks, and
+it adds a 1 second wait to the beginning of every connection.  But it
+does seem to ensure that the startup telnet options get done
+correctly, so....
+
+I'm sure more bugs exist, but they're not leaping out in my usage at
+the moment.
+
+
+
+But, despite these things, have fun, and see if it can actually do
+something useful for you.  If not, well, so, it sucks.
+
+
+Sam Creasey <sammy@users.qual.net>
+8/7/98

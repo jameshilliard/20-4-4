@@ -1,0 +1,51 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+gcc -E
+gcc -E
+gcc -E
+gcc -E
+gcc -E
+configure:803: minix/config.h: No such file or directory
+gcc -c -g -O conftest.c
+gcc -o conftest -g -O conftest.c
+/tmp/cca162331.o: In function `t':
+/home/jmb/src/cpio-2.4.2/configure:910: undefined reference to `makedev'
+gcc -E
+configure:936: sys/mkdev.h: No such file or directory
+gcc -E
+gcc -E
+gcc -E
+gcc -c -g -O conftest.c
+gcc -E
+gcc -o conftest -g -O conftest.c
+gcc -E
+gcc -E
+gcc -E
+gcc -o conftest -g -O conftest.c
+gcc -E
+gcc -E
+gcc -E
+gcc -E
+configure:1330: sys/io/trioctl.h: No such file or directory
+gcc -o conftest -g -O conftest.c
+gcc -o conftest -g -O conftest.c
+gcc -o conftest -g -O conftest.c
+gcc -c -g -O conftest.c
+gcc -o conftest -g -O conftest.c
+gcc -o conftest -g -O conftest.c
+gcc -o conftest -g -O conftest.c
+configure: In function `t':
+configure:1481: `choke' undeclared (first use this function)
+configure:1481: (Each undeclared identifier is reported only once
+configure:1481: for each function it appears in.)
+configure:1481: parse error before `me'
+gcc -o conftest -g -O conftest.c
+gcc -o conftest -g -O conftest.c
+gcc -o conftest -g -O conftest.c
+gcc -c -g -O conftest.c
+gcc -o conftest -g -O conftest.c -ldir
+ld: cannot open -ldir: No such file or directory
+gcc -o conftest -g -O conftest.c -lnsl
+gcc -o conftest -g -O conftest.c -lsocket -lnsl
+ld: cannot open -lsocket: No such file or directory
